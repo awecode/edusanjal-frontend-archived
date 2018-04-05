@@ -5,18 +5,21 @@ module.exports = {
   head: {
     title: 'edusanjal',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nepal&apos;s leading education portal' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: 'Nepal&apos;s leading education portal'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: {color: '#3B8070'},
+  css: [
+    'assets/main.scss'
+  ],
   /*
   ** Build configuration
   */
@@ -24,7 +27,8 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    vendor: ['axios',],
+    extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -34,5 +38,5 @@ module.exports = {
         })
       }
     }
-  }
-}
+  },
+};
