@@ -1,10 +1,26 @@
 @import 'variables';
+// TODO Only import required modules
 @import '~bulma/bulma';
 
-.header{
-  background: $primary;
+
+.navbar-brand .navbar-item{
+  min-width: 9rem;
 }
 
-footer{
+.header {
+  
+}
+
+footer {
   background: $primary;
+  color: #fff;
+  padding: .75rem;
+  text-align: center;
+  a {
+    color: #fff;
+  }
+}
+
+.main {
+  padding: 1rem;
 }
