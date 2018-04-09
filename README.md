@@ -6,6 +6,8 @@
 
 ![Build Status](https://travis-ci.org/awecode/edusanjal-frontend.svg?branch=develop "Build Status")
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/1f6fe4423781cf6aa504/maintainability)](https://codeclimate.com/github/awecode/edusanjal-frontend/maintainability)
+
 
 ---------------------------------------------------------------------------------------------------
 
