@@ -20,7 +20,7 @@ describe('Hamburger Test', () => {
     expect(wrapper.vm.showNav).toBe(true);
   });
 
-  it('Clicking Hamburger again shows it', () => {
+  it('Clicking Hamburger again hides it', () => {
     clickable.trigger('click');
     expect(wrapper.vm.showNav).toBe(false);
   });

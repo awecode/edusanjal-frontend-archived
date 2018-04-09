@@ -9,7 +9,6 @@ export default {
       .assert.cssClassPresent(".navbar-menu", "is-active")
       .assert.visible(".navbar-menu")
       .saveScreenshot('./reports/menu.png')
-      .pause(1000)
       .end();
   },
   'Hamburger Menu Web': browser => {
@@ -17,7 +16,6 @@ export default {
       .assert.visible(".navbar-menu")
       .assert.hidden(".navbar-burger span:first-child")
       .saveScreenshot('./reports/menu.png')
-      .pause(1000)
       .end();
   }
 };
