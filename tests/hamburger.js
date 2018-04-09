@@ -1,8 +1,7 @@
 import {get_desktop, get_mobile} from './utils'
 
-
-module.exports = {
-  'Hamburger Menu Mobile': function (browser) {
+export default {
+  'Hamburger Menu Mobile': browser => {
     get_mobile(browser)
       .assert.hidden(".navbar-menu")
       .click('.navbar-burger span:first-child')
@@ -13,7 +12,7 @@ module.exports = {
       .pause(1000)
       .end();
   },
-  'Hamburger Menu Web': function (browser) {
+  'Hamburger Menu Web': browser => {
     get_desktop(browser)
       .waitForElementVisible('body', 1000)
       .assert.visible(".navbar-menu")
