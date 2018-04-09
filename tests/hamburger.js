@@ -1,13 +1,23 @@
+import {get_desktop, get_mobile} from './utils'
+
+
 module.exports = {
-  'Hamburger Menu': function (browser) {
-    browser
-      .url('http://localhost:3000')
-      .waitForElementVisible('body', 1000)
+  'Hamburger Menu Mobile': function (browser) {
+    get_mobile(browser)
       .assert.hidden(".navbar-menu")
       .click('.navbar-burger span:first-child')
       .assert.cssClassPresent(".navbar-burger", "is-active")
       .assert.cssClassPresent(".navbar-menu", "is-active")
       .assert.visible(".navbar-menu")
+      .saveScreenshot('./reports/menu.png')
+      .pause(1000)
+      .end();
+  },
+  'Hamburger Menu Web': function (browser) {
+    get_desktop(browser)
+      .waitForElementVisible('body', 1000)
+      .assert.visible(".navbar-menu")
+      .assert.hidden(".navbar-burger span:first-child")
       .saveScreenshot('./reports/menu.png')
       .pause(1000)
       .end();
