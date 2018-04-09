@@ -16,16 +16,19 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bulma": "^0.6.2",
-    "nightwatch": "^0.9.20",
-    "node-sass": "^4.8.3",
-    "nuxt": "^1.0.0",
-    "sass-loader": "^6.0.7"
+    "nuxt": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
     "babel-eslint": "^8.2.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-vue": "^4.0.0"
+    "eslint-plugin-vue": "^4.0.0",
+    "nightwatch": "^0.9.20",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7"
   }
 }
