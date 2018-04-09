@@ -1,6 +1,22 @@
 {
-  "presets": ["env"],
+  "presets": [
+    "env"
+  ],
   "plugins": [
     "add-module-exports"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ]
+    }
+  }
 }

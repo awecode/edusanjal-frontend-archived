@@ -11,7 +11,8 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "e2e": "./node_modules/.bin/nightwatch"
+    "e2e": "./node_modules/.bin/nightwatch tests/e2e",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -21,14 +22,36 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
+    "@vue/server-test-utils": "^1.0.0-beta.13",
+    "@vue/test-utils": "^1.0.0-beta.13",
     "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.4.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
+    "jest": "^22.4.3",
+    "jest-serializer-vue": "^1.0.0",
     "nightwatch": "^0.9.20",
     "node-sass": "^4.8.3",
-    "sass-loader": "^6.0.7"
+    "sass-loader": "^6.0.7",
+    "vue-jest": "^2.4.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ]
   }
 }

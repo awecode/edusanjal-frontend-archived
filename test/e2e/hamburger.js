@@ -1,4 +1,4 @@
-import {get_desktop, get_mobile} from '../lib/test_utils'
+import {get_desktop, get_mobile} from '../../lib/test_utils'
 
 export default {
   'Hamburger Menu Mobile': browser => {
