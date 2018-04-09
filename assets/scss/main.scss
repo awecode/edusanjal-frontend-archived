@@ -1,6 +1,8 @@
 @import 'variables';
 // TODO Only import required modules
-@import '~bulma/bulma';
+@import "~bulma/sass/utilities/all";
+@import "~bulma/sass/base/all";
+@import "~bulma/sass/components/navbar";
 
 
 .navbar-brand .navbar-item{

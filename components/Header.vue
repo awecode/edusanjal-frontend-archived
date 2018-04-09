@@ -5,13 +5,14 @@
                 <img src="~/static/logo.svg" alt="">
                 edusanjal
             </a>
-            <div class="navbar-burger burger" data-target="navMenuColorprimary-example">
+            <div class="navbar-burger" v-on:click="showNav = !showNav" v-bind:class="{ 'is-active' : showNav }">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
-        <div id="navMenuColorprimary-example" class="navbar-menu">
+        <div class="navbar-menu" v-bind:class="{ 'is-active' : showNav }">
+
             <div class="navbar-start">
                 <a class="navbar-item" href="/">
                     Home
@@ -64,3 +65,13 @@
         </div>
     </nav>
 </template>
+
+<script>
+    export default{
+      data(){
+        return {
+          showNav: false
+        }
+      }
+    }
+</script>
