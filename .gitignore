@@ -16,3 +16,6 @@ dist
 
 #Log files
 *.log
+
+# Test reports
+reports/
