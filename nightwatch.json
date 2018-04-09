@@ -41,12 +41,7 @@
     },
     "chrome": {
       "desiredCapabilities": {
-        "browserName": "chrome"
-      }
-    },
-    "edge": {
-      "desiredCapabilities": {
-        "browserName": "MicrosoftEdge"
+        "browserName": "firefox"
       }
     }
   }
