@@ -12,7 +12,9 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
     "e2e": "./node_modules/.bin/nightwatch tests/e2e",
-    "test": "jest"
+    "test": "jest",
+    "test:silent": "jest --silent",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "axios": "^0.18.0",

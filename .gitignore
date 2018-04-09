@@ -19,3 +19,4 @@ dist
 
 # Test reports
 reports/
+coverage/
