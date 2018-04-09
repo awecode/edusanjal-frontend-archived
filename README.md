@@ -5,19 +5,29 @@
 ======================================================================
 
 ## Setup
-`yarn`
+```
+yarn
+```
 
 ## Running Development Server
-`yarn dev`
+```
+yarn dev
+``
 
 ## Run tests (uses [Jest](https://facebook.github.io/jest/)
-`yarn test`
+```
+yarn test
+```
 
 ## Run end-to-end tests (uses [Nighwatch](http://nightwatchjs.org/) + (Selenium)[https://www.seleniumhq.org/])
-`yarn e2e`
+```
+yarn e2e
+```
 
 ## Building for Production
-`yarn build`
+```
+yarn build
+```
 
 
 ========================================================================
