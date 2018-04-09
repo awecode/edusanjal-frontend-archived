@@ -4,6 +4,8 @@
 
 > Nepal's leading education portal
 
+![Build Status](https://travis-ci.org/awecode/edusanjal-frontend.svg?branch=develop "Build Status")
+
 
 ---------------------------------------------------------------------------------------------------
 
