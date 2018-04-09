@@ -23,7 +23,7 @@ yarn dev
 yarn test
 ```
 
-## Run end-to-end tests (uses [Nighwatch](http://nightwatchjs.org/) + [Selenium](https://www.seleniumhq.org/) )  
+## Run end-to-end tests (uses [Nightwatch](http://nightwatchjs.org/) + [Selenium](https://www.seleniumhq.org/) )  
 ```
 yarn e2e
 ```
