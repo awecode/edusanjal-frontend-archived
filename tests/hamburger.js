@@ -1,4 +1,4 @@
-import {get_desktop, get_mobile} from './utils'
+import {get_desktop, get_mobile} from '../lib/test_utils'
 
 export default {
   'Hamburger Menu Mobile': browser => {
@@ -14,7 +14,6 @@ export default {
   },
   'Hamburger Menu Web': browser => {
     get_desktop(browser)
-      .waitForElementVisible('body', 1000)
       .assert.visible(".navbar-menu")
       .assert.hidden(".navbar-burger span:first-child")
       .saveScreenshot('./reports/menu.png')
