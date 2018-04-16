@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV !== 'production';
+
 module.exports = {
   /*
   ** Headers of the page
@@ -20,6 +22,10 @@ module.exports = {
   css: [
     'assets/scss/main.scss'
   ],
+  plugins: ['~/plugins/axios.js'],
+  env: {
+    API_URL: isDev ? 'http://127.0.0.1:8000' : 'https://api.edusanjal.com/'
+  },
   /*
   ** Build configuration
   */
