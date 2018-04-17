@@ -1,7 +1,8 @@
 <template>
     <div>
-        <section class="header">
-            {{name}}
+        <section class="header" :style="{background: 'url('+cover_image+')'}">
+            <img class="logo" :src="logo" :alt="name"/>
+            <h1>{{name}}</h1>
         </section>
     </div>
 </template>

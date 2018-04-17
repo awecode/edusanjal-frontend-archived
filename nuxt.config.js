@@ -33,7 +33,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    vendor: ['axios',],
+    vendor: ['axios', 'babel-polyfill'],
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
         config.module.rules.push({
