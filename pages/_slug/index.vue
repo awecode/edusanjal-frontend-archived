@@ -14,6 +14,30 @@
                 </div>
             </div>
         </section>
+        <div class="tabs institute-tabs">
+            <ul class="container">
+                <li class="is-active"><a>About</a></li>
+                <li><a>Gallery</a></li>
+                <li><a>Courses</a></li>
+                <li><a>Features</a></li>
+                <li><a>Guidelines</a></li>
+                <li><a>Scholarship</a></li>
+                <li><a>Contact</a></li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="left">
+                <div class="description" v-html="description"></div>
+            </div>
+            <div class="right">
+            </div>
+        </div>
+        <div class="gallery">
+            <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
+            <div class="bg-primary has-text-centered">
+                <img v-for="image in images" :src="image.file" :key="image.name">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -23,7 +47,6 @@
   export default {
     components: {Verified},
     validate({params}) {
-      // Must be a number
       return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(params.id)
     },
     async asyncData({params: {slug}}) {
@@ -53,7 +76,6 @@
         }
 
         h1 {
-            font-size: 2.7rem;
             font-weight: bold;
             display: inline-block;
             text-transform: uppercase;
@@ -63,6 +85,18 @@
             padding-right: 1rem;
         }
 
+    }
+    
+    .gallery img{
+        max-height: 800px;
+        max-width: 800px;
+    }
+
+    .institute-tabs {
+        text-transform: uppercase;
+        border-bottom: 1px solid #ccc;
+        line-height: 2rem;
+        font-size: .9rem;
     }
 
 </style>
