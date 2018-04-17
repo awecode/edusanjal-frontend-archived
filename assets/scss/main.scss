@@ -1,10 +1,13 @@
 @import 'variables';
-// TODO Only import required modules
+//@import '~bulma';
 @import "~bulma/sass/utilities/all";
 @import "~bulma/sass/base/all";
 @import "~bulma/sass/components/navbar";
 @import "~bulma/sass/components/tabs";
+@import "~bulma/sass/components/card";
+@import "~bulma/sass/grid/columns";
 //@import 'mixins';
+
 
 .navbar-brand .navbar-item {
   min-width: 9rem;
@@ -52,6 +55,10 @@ strong {
   margin-top: 3rem;
 }
 
+.pt2{
+  padding-top: 2rem;
+}
+
 h1 {
   font-size: 2.7rem;
 }
@@ -66,6 +73,24 @@ h2 {
   background: $primary;
 }
 
+.bg-grey{
+  background: #f2f0f5;
+}
+
 .description p{
   padding: .5rem 0;
+  text-align: justify;
+}
+
+i.gap:before{
+  content: ' ';
+  padding: 0 .2rem;
+}
+
+.csv:after{
+  content:', ';
+}
+
+.csv:last-child:after{
+  content:'';
 }

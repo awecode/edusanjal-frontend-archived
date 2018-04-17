@@ -25,11 +25,27 @@
                 <li><a>Contact</a></li>
             </ul>
         </div>
-        <div class="container">
-            <div class="left">
-                <div class="description" v-html="description"></div>
-            </div>
-            <div class="right">
+        <div class="bg-grey">
+            <div class="container columns pt2">
+                <div class="column is-three-fifths">
+                    <div class="description" v-html="description"></div>
+                </div>
+                <div class="column is-two-fifths">
+                    <div class="card">
+                        <div class="card-content info">
+                            <div v-if="established"><i class="gap"></i>ESTD:<i class="gap"></i>{{established}}</div>
+                            <div v-if="address"><i class="gap"></i>{{address}}</div>
+                            <div v-if="type"><i class="gap"></i>{{type}}</div>
+                            <div v-if="phone"><i class="gap"></i><span class="csv" v-for="ph in phone" :key="ph">
+                                <a :href="'tel:'+ph">{{ph}}</a>
+                            </span></div>
+                            <div v-if="email"><i class="gap"></i><span class="csv" v-for="em in email" :key="em">
+                                <a :href="'mailto:'+em">{{em}}</a>
+                            </span></div>
+                            <div v-if="website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener" :href="website">{{website}}</a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="gallery">
@@ -82,12 +98,12 @@
         }
 
         strong {
-            padding-right: 1rem;
+            padding-right: 2rem;
         }
 
     }
-    
-    .gallery img{
+
+    .gallery img {
         max-height: 800px;
         max-width: 800px;
     }
@@ -97,6 +113,7 @@
         border-bottom: 1px solid #ccc;
         line-height: 2rem;
         font-size: .9rem;
+        margin-bottom: 0 !important;
     }
 
 </style>
