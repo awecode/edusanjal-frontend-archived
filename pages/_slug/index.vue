@@ -1,6 +1,8 @@
 <template>
     <div>
-        {{name}}
+        <section class="header">
+            {{name}}
+        </section>
     </div>
 </template>
 
@@ -13,13 +15,9 @@
     async asyncData({params: {slug}}) {
       const url = 'institutes/' + slug + '/';
       return api.get(url)
-      //      debugger;
-      //      return $axios.get(`https://my-api/posts/${params.id}`)
         .then((res) => {
-//          console.log(res);
-          const data = res.data;
-          return {name: data.name}
+          return res.data;
         })
     }
   }
-</script>
+</script>esb
