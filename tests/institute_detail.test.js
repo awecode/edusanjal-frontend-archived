@@ -115,9 +115,6 @@ describe('College Detail', () => {
     data: data
   });
 
-  wrapper.setData(data);
-
-
   it('It is a component', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   });
@@ -137,5 +134,5 @@ describe('College Detail', () => {
   it('Styles cover image', () => {
     expect(wrapper.find('section.header').element.style.background).toBe('url(' + data.cover_image + ')');
   });
-  
+
 });
