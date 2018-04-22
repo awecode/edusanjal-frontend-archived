@@ -70,7 +70,7 @@
       return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(params.id)
     },
     async fetch({store, params: {slug}}) {
-      await store.dispatch('collection/get_item');
+      await store.dispatch('collection/get_item', ['institutes', slug]);
 //      console.log(123);
 //      return store.state.collection.institute.objects[0];
 
@@ -82,7 +82,7 @@
 //        });
     },
     data() {
-      return this.$store.state.collection.institute.objects[0];
+      return this.$store.state.collection.institutes.objects[0];
     }
   }
 </script>

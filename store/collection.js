@@ -1,5 +1,5 @@
 export const state = () => ({
-  institute: {objects: [], pagination: {}, pages: {}, key: 'slug'}
+  institutes: {objects: [], pagination: {}, pages: {}, key: 'slug'}
 });
 
 export const getters = () => ({
@@ -73,8 +73,9 @@ export const mutations = {
 };
 
 export const actions = {
-  async get_item({commit, store}){
-    let {data} = await api.get('institutes/khwopa-college/');
-    commit('update_item', ['institute', data]);
+  async get_item({commit, store}, [collection_name, slug]){
+    let url = `/${collection_name}/${slug}/`;
+    let {data} = await api.get(url);
+    commit('update_item', [collection_name, data]);
   }
 };
