@@ -1,5 +1,5 @@
 export const state = () => ({
-  institutes: {objects: [], pagination: {}, pages: {}, key: 'slug'}
+  institutes: {objects: {}, pagination: {}, pages: {}, key: 'slug'}
 });
 
 export const getters = () => ({
@@ -48,19 +48,9 @@ export const mutations = {
       }
     });
   },
-  update_item(state, [collection_name, data]) {
+  update_item(state, [collection_name, key, data]) {
     let collection = state[collection_name];
-    if (collection && data[collection.key]) {
-      
-      // noinspection EqualityComparisonWithCoercionJS
-      let index = collection.objects.findIndex(x => x[collection.key] == data[collection.key]);
-      
-      if (index === -1) {
-        collection.objects.push(data);
-      } else {
-        collection.objects[index] = data;
-      }
-    }
+    collection.objects[key] = data;
   },
   add_item(state, [collection_name, data]) {
     let collection = state[collection_name];
@@ -73,9 +63,9 @@ export const mutations = {
 };
 
 export const actions = {
-  async get_item({commit, store}, [collection_name, slug]){
-    let url = `/${collection_name}/${slug}/`;
+  async get_item({commit, store}, [collection_name, key]) {
+    let url = `/${collection_name}/${key}/`;
     let {data} = await api.get(url);
-    commit('update_item', [collection_name, data]);
+    commit('update_item', [collection_name, key, data]);
   }
 };
