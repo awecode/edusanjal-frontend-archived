@@ -71,3 +71,10 @@ export const mutations = {
     collection.objects.push(data);
   },
 };
+
+export const actions = {
+  async get_item({commit, store}){
+    let {data} = await api.get('institutes/khwopa-college/');
+    commit('update_item', ['institute', data]);
+  }
+};

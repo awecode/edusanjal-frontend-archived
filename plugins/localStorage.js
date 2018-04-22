@@ -2,6 +2,6 @@ import createPersistedState from 'vuex-persistedstate'
 
 export default ({store}) => {
   createPersistedState({
-      key: 'edusanjal-f',
+    key: 'edusanjal-f',
   })(store)
 }
