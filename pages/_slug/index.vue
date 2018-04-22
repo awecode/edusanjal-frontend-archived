@@ -1,76 +1,85 @@
 <template>
-    <div>
-        <section class="header" :style="{background: 'url('+cover_image+')'}">
-            <div class="container">
-                <img class="logo" :src="logo" :alt="name"/>
-            </div>
-            <div class="footer">
-                <div class="container">
-                    <div>
-                        <h1>{{name}}</h1>
-                        <Verified v-if="verified"/>
-                    </div>
-                    <strong class="is-uppercase" v-for="board in boards" :key="board.slug">{{board.name}}</strong>
-                </div>
-            </div>
-        </section>
-        <div class="tabs institute-tabs">
-            <ul class="container">
-                <li class="is-active"><a>About</a></li>
-                <li><a>Gallery</a></li>
-                <li><a>Courses</a></li>
-                <li><a>Features</a></li>
-                <li><a>Guidelines</a></li>
-                <li><a>Scholarship</a></li>
-                <li><a>Contact</a></li>
-            </ul>
-        </div>
-        <div class="bg-grey">
-            <div class="container columns pt2">
-                <div class="column is-three-fifths">
-                    <div class="description" v-html="description"></div>
-                </div>
-                <div class="column is-two-fifths">
-                    <div class="card">
-                        <div class="card-content info">
-                            <div v-if="established"><i class="gap"></i>ESTD:<i class="gap"></i>{{established}}</div>
-                            <div v-if="address"><i class="gap"></i>{{address}}</div>
-                            <div v-if="type"><i class="gap"></i>{{type}}</div>
-                            <div v-if="phone"><i class="gap"></i><span class="csv" v-for="ph in phone" :key="ph">
-                                <a :href="'tel:'+ph">{{ph}}</a>
-                            </span></div>
-                            <div v-if="email"><i class="gap"></i><span class="csv" v-for="em in email" :key="em">
-                                <a :href="'mailto:'+em">{{em}}</a>
-                            </span></div>
-                            <div v-if="website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener" :href="website">{{website}}</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="gallery">
-            <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
-            <div class="bg-primary has-text-centered">
-                <img v-for="image in images" :src="image.file" :key="image.name">
-            </div>
-        </div>
+    <div v-cloak>
+        <h1>{{name}}</h1>
+        <!--<section class="header" :style="{background: 'url('+cover_image+')'}">-->
+        <!--<div class="container">-->
+        <!--<img class="logo" :src="logo" :alt="name"/>-->
+        <!--</div>-->
+        <!--<div class="footer">-->
+        <!--<div class="container">-->
+        <!--<div>-->
+        <!--<h1>{{name}}</h1>-->
+        <!--<Verified v-if="verified"/>-->
+        <!--</div>-->
+        <!--<strong class="is-uppercase" v-for="board in boards" :key="board.slug">{{board.name}}</strong>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</section>-->
+        <!--<div class="tabs institute-tabs">-->
+        <!--<ul class="container">-->
+        <!--<li class="is-active"><a>About</a></li>-->
+        <!--<li><a>Gallery</a></li>-->
+        <!--<li><a>Courses</a></li>-->
+        <!--<li><a>Features</a></li>-->
+        <!--<li><a>Guidelines</a></li>-->
+        <!--<li><a>Scholarship</a></li>-->
+        <!--<li><a>Contact</a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="bg-grey">-->
+        <!--<div class="container columns pt2">-->
+        <!--<div class="column is-three-fifths">-->
+        <!--<div class="description" v-html="description"></div>-->
+        <!--</div>-->
+        <!--<div class="column is-two-fifths">-->
+        <!--<div class="card">-->
+        <!--<div class="card-content info">-->
+        <!--<div v-if="established"><i class="gap"></i>ESTD:<i class="gap"></i>{{established}}</div>-->
+        <!--<div v-if="address"><i class="gap"></i>{{address}}</div>-->
+        <!--<div v-if="type"><i class="gap"></i>{{type}}</div>-->
+        <!--<div v-if="phone"><i class="gap"></i><span class="csv" v-for="ph in phone" :key="ph">-->
+        <!--<a :href="'tel:'+ph">{{ph}}</a>-->
+        <!--</span></div>-->
+        <!--<div v-if="email"><i class="gap"></i><span class="csv" v-for="em in email" :key="em">-->
+        <!--<a :href="'mailto:'+em">{{em}}</a>-->
+        <!--</span></div>-->
+        <!--<div v-if="website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener" :href="website">{{website}}</a></div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="gallery">-->
+        <!--<h2 class="is-uppercase has-text-centered mt3">Gallery</h2>-->
+        <!--<div class="bg-primary has-text-centered">-->
+        <!--<img v-for="image in images" :src="image.file" :key="image.name">-->
+        <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
 <script>
   import Verified from '~/components/Verified.vue';
+  import {mapState} from 'vuex';
 
   export default {
     components: {Verified},
     validate({params}) {
       return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(params.id)
     },
-    async asyncData({params: {slug}}) {
+    fetch({store, params: {slug}}) {
+
       const url = 'institutes/' + slug + '/';
-      return api.get(url)
-        .then((res) => {
-          return res.data;
-        })
+      api.get(url)
+        .then(({data}) => {
+          store.commit('collection/update_item', ['institute', data]);
+
+        });
+    },
+    computed: {
+      data() {
+        return this.$store.state.collection.institute.objects[0];
+      }
     }
   }
 </script>
