@@ -1,6 +1,7 @@
 <template>
     <div>
-        <section class="header" :style="{background: 'url('+obj.cover_image+')'}"><div class="container">
+        <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
+            <div class="container">
                 <img class="logo" :src="obj.logo" :alt="obj.name"/>
             </div>
             <div class="footer">
@@ -41,7 +42,8 @@
                             <div v-if="obj.email"><i class="gap"></i><span class="csv" v-for="em in obj.email" :key="em">
         <a :href="'mailto:'+em">{{em}}</a>
         </span></div>
-                            <div v-if="obj.website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener" :href="obj.website">{{obj.website}}</a>
+                            <div v-if="obj.website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener"
+                                                                          :href="obj.website">{{obj.website}}</a>
                             </div>
                         </div>
                     </div>
@@ -60,31 +62,32 @@
 
 <script>
   import Verified from '~/components/Verified.vue';
-//  import {mapState} from 'vuex';
 
   export default {
     remote: true,
     components: {Verified},
+    collection: 'institutes',
+    key: 'slug',
     validate({params}) {
       return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(params.id)
     },
-    async fetch({store, params: {slug}}) {
-      if (!store.state.collection.institutes.objects[slug]) {
-        await store.dispatch('collection/get_item', ['institutes', slug]);
+    async fetch({store, params}) {
+      if (!store.state.collection[this.collection].objects[params[this.key]]) {
+        await store.dispatch('collection/get_item', [this.collection, params[this.key]]);
       } else {
         this.remote = false;
       }
     },
     computed: {
-    obj() {
-      return this.$store.state.collection.institutes.objects[this.$route.params['slug']];
-    },
+      obj() {
+        return this.$store.state.collection[this.$options.collection].objects[this.$route.params[this.$options.key]];
+      },
     },
     async mounted() {
       if (this.$options.remote) {
-        await this.$store.dispatch('collection/update_item_from_ssr', ['institutes', this.$route.params['slug']]);
+        await this.$store.dispatch('collection/update_item_from_ssr', [this.$options.collection, this.$route.params[this.$options.key]]);
       } else {
-        await this.$store.dispatch('collection/get_item', ['institutes', this.$route.params['slug']]);
+        await this.$store.dispatch('collection/get_item', [this.$options.collection, this.$route.params[this.$options.key]]);
       }
     },
   }
