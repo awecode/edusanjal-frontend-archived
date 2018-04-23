@@ -67,5 +67,9 @@ export const actions = {
     let url = `/${collection_name}/${key}/`;
     let {data} = await api.get(url);
     commit('update_item', [collection_name, key, data]);
+  },
+  async update_item_from_ssr({commit, store}, [collection_name, key]) {
+    let data = window.__NUXT__.state.collection[collection_name].objects[key]
+    commit('update_item', [collection_name, key, data]);
   }
 };
