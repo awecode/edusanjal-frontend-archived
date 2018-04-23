@@ -12,59 +12,35 @@ export const getters = () => ({
 });
 
 export const mutations = {
-  create(state, collection_name) {
-    Vue.set(state, collection_name, [{objects: [], pagination: {}, pages: {}}]);
-  },
-  update(state, [collection_name, data]) {
-    let collection = state[collection_name];
-    // Create collection if it doesn't exist
-    if (!collection) {
-      collection = Vue.set(state, collection_name, {objects: [], pagination: {}, pages: {}});
-    }
-    // Find current page
-    let page_no = data.pagination.page.toString();
-    // Update pagination
-    collection.pagination = data.pagination;
-    // Find ids of objects in current page
-    let ids = data.results.map(obj => obj.id);
-    // Remove each id from all other pages
-    ids.forEach(id => {
-      Object.keys(collection.pages).forEach(key => {
-        let page = collection.pages[key];
-        if (page.includes(id)) {
-          page = page.splice(page.indexOf(id), 1);
-        }
-      });
-    });
-    // Update current page ids
-    collection.pages[page_no] = ids;
-    // Update/add to objects list
-    data.results.forEach(obj => {
-      let index = collection.objects.findIndex(x => x.id == obj.id);
-      if (index === -1) {
-        collection.objects.push(obj);
-      } else {
-        collection.objects[index] = obj;
-      }
-    });
-  },
   update_item(state, [collection_name, key, data]) {
     let collection = state[collection_name];
     collection.objects[key] = data;
+    let obj = collection.objects[key] = collection.objects[key] || {};
+    Object.assign(obj, data);
   },
-  add_item(state, [collection_name, data]) {
+  update_list(state, [collection_name, page, data, key_name]) {
     let collection = state[collection_name];
-
-    if (!collection) {
-      collection = Vue.set(state, collection_name, [{objects: [], pagination: {}, pages: {}}])[0];
+    collection.pagination['count'] = data.count;
+    collection.pagination['pages'] = data.pages;
+    let page_list = collection.pages[page + ''] = [];
+    for (let item of data.results) {
+      let key = item[key_name];
+      page_list.push(key);
+      let obj = collection.objects[key] = collection.objects[key] || {};
+      Object.assign(obj, item);
     }
-    collection.objects.push(data);
   },
 };
 
 export const actions = {
+  async get_list({commit, store}, [collection_name, page, key_name]) {
+    let url = `/${collection_name}/?page=${page}`;
+    let {data} = await api.get(url);
+    commit('update_list', [collection_name, page, data, key_name]);
+  },
   async get_item({commit, store}, [collection_name, key]) {
     let url = `/${collection_name}/${key}/`;
+    console.log(url);
     let {data} = await api.get(url);
     commit('update_item', [collection_name, key, data]);
   },

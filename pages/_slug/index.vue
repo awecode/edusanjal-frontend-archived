@@ -72,6 +72,10 @@
       return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(params.id)
     },
     async fetch({store, params}) {
+      
+      if (!params[this.key] || params[this.key]==='null') {
+        return;
+      }
       if (!store.state.collection[this.collection].objects[params[this.key]]) {
         await store.dispatch('collection/get_item', [this.collection, params[this.key]]);
       } else {
