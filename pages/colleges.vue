@@ -1,6 +1,8 @@
 <template>
     <div>
-        <nuxt-link :to="{name: 'slug', params: {slug: 'khwopa-college'}}">Khwopa College</nuxt-link>
+        <ul v-for="obj in objs" :key="obj.slug">
+            {{obj.name}}
+        </ul>
     </div>
 </template>
 
@@ -8,6 +10,7 @@
   import Verified from '~/components/Verified.vue';
 
   export default {
+    remote: true,
     page: 1,
     components: {Verified},
     collection: 'institutes',
@@ -16,16 +19,15 @@
       if (query.page) {
         this.page = query.page;
       }
-//      if (!store.state.collection[this.collection].objects[params[this.key]]) {
-      await store.dispatch('collection/get_list', [this.collection, this.page, this.key]);
-//      } else {
-//        this.remote = false;
-//      }
+      if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
+        await store.dispatch('collection/get_list', [this.collection, this.page, this.key]);
+      } else {
+        this.remote = false;
+      }
     },
     computed: {
-      obj() {
-        return [];
-//        return this.$store.state.collection[this.$options.collection].objects[this.$route.params[this.$options.key]];
+      objs() {
+        return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.$options.page);
       },
     },
     async mounted() {

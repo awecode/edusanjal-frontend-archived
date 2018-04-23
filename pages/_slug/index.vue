@@ -81,6 +81,7 @@
       } else {
         this.remote = false;
       }
+      console.log(this.remote);
     },
     computed: {
       obj() {
