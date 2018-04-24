@@ -34,7 +34,7 @@
       if (this.$options.remote) {
         await this.$store.dispatch('collection/update_list_from_ssr', [this.$options.collection, this.$route.params[this.$options.key], this.$options.page]);
       } else {
-//        await this.$store.dispatch('collection/get_item', [this.$options.collection, this.$route.params[this.$options.key]]);
+        await this.$store.dispatch('collection/get_list', [this.$options.collection, this.$options.key, this.$options.page]);
       }
     },
   }

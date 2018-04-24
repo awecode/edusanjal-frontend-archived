@@ -41,22 +41,22 @@ export const mutations = {
 };
 
 export const actions = {
-  async get_list({commit, store}, [collection_name, key_name, page]) {
+  async get_list({commit}, [collection_name, key_name, page]) {
     let url = `/${collection_name}/?page=${page}`;
     let {data} = await api.get(url);
     commit('update_list', [collection_name, data, key_name, page]);
   },
-  async get_item({commit, store}, [collection_name, key]) {
+  async get_item({commit}, [collection_name, key]) {
     let url = `/${collection_name}/${key}/`;
     let {data} = await api.get(url);
     commit('update_item', [collection_name, key, data]);
   },
-  async update_list_from_ssr({commit, store}, [collection_name, key, page]) {
+  async update_list_from_ssr({commit}, [collection_name, key, page]) {
 
     let data = window.__NUXT__.state.collection[collection_name];
     commit('update_list_ssr', [collection_name, data, key, page]);
   },
-  async update_item_from_ssr({commit, store}, [collection_name, key]) {
+  async update_item_from_ssr({commit}, [collection_name, key]) {
     let data = window.__NUXT__.state.collection[collection_name].objects[key];
     commit('update_item', [collection_name, key, data]);
   }
