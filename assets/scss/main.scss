@@ -8,13 +8,12 @@
 @import "~bulma/sass/grid/columns";
 //@import 'mixins';
 
-
 .navbar-brand .navbar-item {
   min-width: 9rem;
 }
 
-.header {
-
+body.offline .navbar.is-primary {
+  background-color: #777;
 }
 
 footer {
@@ -55,7 +54,7 @@ strong {
   margin-top: 3rem;
 }
 
-.pt2{
+.pt2 {
   padding-top: 2rem;
 }
 
@@ -69,28 +68,28 @@ h2 {
   margin: 1rem 0;
 }
 
-.bg-primary{
+.bg-primary {
   background: $primary;
 }
 
-.bg-grey{
+.bg-grey {
   background: #f2f0f5;
 }
 
-.description p{
+.description p {
   padding: .5rem 0;
   text-align: justify;
 }
 
-i.gap:before{
+i.gap:before {
   content: ' ';
   padding: 0 .2rem;
 }
 
-.csv:after{
-  content:', ';
+.csv:after {
+  content: ', ';
 }
 
-.csv:last-child:after{
-  content:'';
+.csv:last-child:after {
+  content: '';
 }
