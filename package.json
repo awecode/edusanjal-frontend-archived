@@ -17,6 +17,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@nuxtjs/pwa": "^2.0.8",
     "axios": "^0.18.0",
     "bulma": "^0.6.2",
     "nuxt": "^1.0.0",

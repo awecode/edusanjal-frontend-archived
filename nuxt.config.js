@@ -22,9 +22,12 @@ module.exports = {
   css: [
     'assets/scss/main.scss'
   ],
+  modules: [
+    '@nuxtjs/pwa',
+  ],
   plugins: ['~/plugins/axios.js',
     {src: '~/plugins/localStorage.js', ssr: false}
-    ],
+  ],
   env: {
     API_URL: isDev ? 'http://127.0.0.1:8000' : 'https://api.edusanjal.com/'
   },

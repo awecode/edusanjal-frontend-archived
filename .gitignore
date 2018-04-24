@@ -20,3 +20,6 @@ dist
 # Test reports
 reports/
 coverage/
+
+# Service Worker files
+sw.*
