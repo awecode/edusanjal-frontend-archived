@@ -21,6 +21,7 @@
     "axios": "^0.18.0",
     "bulma": "^0.6.2",
     "nuxt": "^1.0.0",
+    "vanilla-lazyload": "^8.7.1",
     "vuex-persistedstate": "^2.5.2"
   },
   "devDependencies": {
