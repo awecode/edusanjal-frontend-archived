@@ -14,7 +14,8 @@
     "e2e": "./node_modules/.bin/nightwatch tests/e2e",
     "test": "jest",
     "test:silent": "jest --silent",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^2.0.8",
@@ -33,6 +34,7 @@
     "babel-eslint": "^8.2.1",
     "babel-jest": "^22.4.3",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "cypress": "^2.1.0",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
