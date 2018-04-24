@@ -20,7 +20,7 @@
         this.page = query.page;
       }
       if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
-        await store.dispatch('collection/get_list', [this.collection, this.page, this.key]);
+        await store.dispatch('collection/get_list', [this.collection, this.key, this.page]);
       } else {
         this.remote = false;
       }
@@ -31,11 +31,11 @@
       },
     },
     async mounted() {
-//      if (this.$options.remote) {
-//        await this.$store.dispatch('collection/update_item_from_ssr', [this.$options.collection, this.$route.params[this.$options.key]]);
-//      } else {
+      if (this.$options.remote) {
+        await this.$store.dispatch('collection/update_list_from_ssr', [this.$options.collection, this.$route.params[this.$options.key], this.$options.page]);
+      } else {
 //        await this.$store.dispatch('collection/get_item', [this.$options.collection, this.$route.params[this.$options.key]]);
-//      }
+      }
     },
   }
 </script>
