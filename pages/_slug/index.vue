@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import Verified from '~/components/Verified.vue';
+  import Verified from '@/components/Verified.vue';
 
   export default {
     remote: true,
@@ -99,7 +99,7 @@
 
 
 <style lang="scss">
-    @import '~assets/scss/variables';
+    @import '@assets/scss/variables';
 
     section.header {
         display: flex;
