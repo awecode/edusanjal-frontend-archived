@@ -5,8 +5,12 @@ import CollegeDetail from '../pages/_slug/index.vue'
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
-localVue.use(VueRouter);
+// localVue.use(VueRouter);
 const router = new VueRouter();
+
+const $route = {
+  params: {'slug': 'khwopa-college'}
+};
 
 describe('College Detail', () => {
 
@@ -129,31 +133,29 @@ describe('College Detail', () => {
     })
   });
 
-  // const wrapper = shallow(CollegeDetail, {
-  //   store, localVue
-  // });
-
   it('It is a component', () => {
-    const wrapper = mount(CollegeDetail, {
-      store, router, localVue
-    });
+    const wrapper = mount(CollegeDetail, {store, localVue, mocks: {$route}});
     expect(wrapper.isVueInstance()).toBeTruthy()
   });
 
-  // it('Has name', () => {
-  //   expect(wrapper.vm.name).toBe(data.name);
-  // });
-  //
-  // it('Renders name', () => {
-  //   expect(wrapper.find('h1').text()).toContain(data.name);
-  // });
-  //
-  // it('Renders logo image', () => {
-  //   expect(wrapper.find('img.logo').attributes().src).toBe(data.logo);
-  // });
-  //
-  // it('Styles cover image', () => {
-  //   expect(wrapper.find('section.header').element.style.background).toBe('url(' + data.cover_image + ')');
-  // });
+  it('Has name', () => {
+    const wrapper = mount(CollegeDetail, {store, localVue, mocks: {$route}});
+    expect(wrapper.vm.obj.name).toBe(data.name);
+  });
+
+  it('Renders name', () => {
+    const wrapper = mount(CollegeDetail, {store, localVue, mocks: {$route}});
+    expect(wrapper.find('h1').text()).toContain(data.name);
+  });
+
+  it('Renders logo image', () => {
+    const wrapper = mount(CollegeDetail, {store, localVue, mocks: {$route}});
+    expect(wrapper.find('img.logo').attributes().src).toBe(data.logo);
+  });
+
+  it('Styles cover image', () => {
+    const wrapper = mount(CollegeDetail, {store, localVue, mocks: {$route}});
+    expect(wrapper.find('section.header').element.style.background).toBe('url(' + data.cover_image + ')');
+  });
 
 });
