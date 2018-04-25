@@ -123,14 +123,18 @@ describe('College Detail', () => {
     ]
   };
 
+  const actions = {
+    moduleActionClick: jest.fn()
+  };
+
+  const state = {
+    collection: {
+      institutes: {objects: {'khwopa-college': data}, pagination: {}, pages: {}, key: 'slug'}
+    }
+  }
+  
   beforeEach(() => {
-    store = new Vuex.Store({
-      state: {
-        collection: {
-          institutes: {objects: {'khwopa-college': data}, pagination: {}, pages: {}, key: 'slug'}
-        }
-      }
-    })
+    store = new Vuex.Store({state, actions})
   });
 
   it('It is a component', () => {
