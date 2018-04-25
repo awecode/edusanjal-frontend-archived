@@ -2,7 +2,7 @@
     <nav class="navbar is-primary">
         <div class="navbar-brand">
             <nuxt-link to="/" class="navbar-item">
-                <img src="~/static/logo.svg" alt="">
+                <img src="@/static/logo.svg" alt="">
                 edusanjal
             </nuxt-link>
             <!--<a class="navbar-item" href="/">-->
