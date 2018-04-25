@@ -15,7 +15,7 @@
     "test": "jest",
     "test:silent": "jest --silent",
     "test:coverage": "jest --coverage",
-    "cypress:open": "cypress open"
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^2.0.8",

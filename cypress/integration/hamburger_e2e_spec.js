@@ -1,7 +1,3 @@
-// import Header from '../../components/Header.vue'
-//
-// const mountVue = require('cypress-vue-unit-test');
-
 const base_url = 'http://127.0.0.1:3000/';
 
 describe('Hamburger', () => {

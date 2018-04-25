@@ -22,14 +22,21 @@ yarn
 yarn dev
 ```
 
-## Run tests (uses [Jest](https://facebook.github.io/jest/))  
+## Tests
+
+### Run unit tests (uses [Jest](https://facebook.github.io/jest/))  
 ```
 yarn test
 ```
 
-## Run end-to-end tests (uses [Nightwatch](http://nightwatchjs.org/) + [Selenium](https://www.seleniumhq.org/) )  
+### Run end-to-end tests (uses [Nightwatch](http://nightwatchjs.org/) + [Selenium](https://www.seleniumhq.org/) )  
 ```
 yarn e2e
+```
+
+### Open Cypress test runner  
+```
+yarn cypress
 ```
 
 ## Building for Production  
