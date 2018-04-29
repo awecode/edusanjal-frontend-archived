@@ -99,7 +99,7 @@
 
 
 <style lang="scss">
-    @import '@assets/scss/variables';
+    @import '~assets/scss/variables';
 
     section.header {
         display: flex;
