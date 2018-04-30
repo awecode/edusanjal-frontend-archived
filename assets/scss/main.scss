@@ -28,12 +28,12 @@ footer {
 }
 
 .main {
-  //padding: 1rem;
+  //padding: 0 1rem;
 }
 
 .logo {
-  height: 150px;
-  width: 150px;
+  max-height: 100px;
+  max-width: 100px;
 }
 
 .container {
@@ -92,4 +92,8 @@ i.gap:before {
 
 .csv:last-child:after {
   content: '';
+}
+
+.container{
+  padding: 0 1rem;
 }

@@ -11,7 +11,9 @@
                         <h1>{{obj.name}}</h1>
                         <Verified v-if="obj.verified"/>
                     </div>
-                    <strong class="is-uppercase" v-for="board in obj.boards" :key="board.slug">{{board.name}}</strong>
+                    <div class="boards">
+                        <strong class="is-uppercase" v-for="board in obj.boards" :key="board.slug">{{board.name}}</strong>
+                    </div>
                 </div>
             </div>
         </section>
@@ -144,10 +146,22 @@
         section.header {
             background: transparent !important;
             flex-direction: inherit;
+            min-height: inherit;
             .footer {
                 background: transparent;
                 color: $primary;
             }
+            .container {
+                width: auto;
+                margin-right: 1rem;
+            }
+            /* Move boards to left */
+            /*.boards{*/
+                /*position: absolute;*/
+                /*left: 1rem;*/
+                /*line-height: 2rem;*/
+            /*}*/
+            /*margin-bottom: 1rem;*/
         }
     }
 
