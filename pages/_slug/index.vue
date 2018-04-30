@@ -1,5 +1,6 @@
 <template>
     <div>
+        <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
         <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
             <div class="container">
                 <img class="logo" :src="obj.logo" :alt="obj.name"/>
@@ -72,8 +73,8 @@
       return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(params.id)
     },
     async fetch({store, params}) {
-      
-      if (!params[this.key] || params[this.key]==='null') {
+
+      if (!params[this.key] || params[this.key] === 'null') {
         return;
       }
       if (!store.state.collection[this.collection].objects[params[this.key]]) {
@@ -107,6 +108,7 @@
         flex-direction: column;
         justify-content: flex-end;
         color: #fff;
+        background-position: center !important;
 
         .footer {
             background: rgba($primary, .6);
@@ -115,7 +117,7 @@
 
         h1 {
             font-weight: bold;
-            display: inline-block;
+            display: inline;
             text-transform: uppercase;
         }
 
@@ -136,6 +138,25 @@
         line-height: 2rem;
         font-size: .9rem;
         margin-bottom: 0 !important;
+    }
+
+    @media (max-width: 769px) {
+        section.header {
+            background: transparent !important;
+            flex-direction: inherit;
+            .footer {
+                background: transparent;
+                color: $primary;
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.header {
+            h1 {
+                font-size: 2rem
+            }
+        }
     }
 
 </style>

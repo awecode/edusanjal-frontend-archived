@@ -12,5 +12,6 @@
         position: relative;
         top: -0.7rem;
         margin-left: .5rem;
+        color: #fff;
     }
 </style>
