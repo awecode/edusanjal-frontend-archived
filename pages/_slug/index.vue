@@ -56,7 +56,7 @@
         <div class="gallery" id="gallery">
             <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
             <div class="bg-primary has-text-centered">
-                <img v-for="image in obj.images" :data-src="image.file" :key="image.name">
+                <img v-for="image in obj.images" :data-src="image.url.small" :key="image.name">
             </div>
         </div>
 
