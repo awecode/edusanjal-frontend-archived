@@ -20,7 +20,7 @@
         <div class="tabs institute-tabs">
             <ul class="container">
                 <li class="is-active"><a>About</a></li>
-                <li><a>Gallery</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a>Courses</a></li>
                 <li><a>Features</a></li>
                 <li><a>Guidelines</a></li>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="gallery">
+        <div class="gallery" id="gallery">
             <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
             <div class="bg-primary has-text-centered">
                 <img v-for="image in obj.images" :data-src="image.file" :key="image.name">

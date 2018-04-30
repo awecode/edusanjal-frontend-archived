@@ -23,12 +23,13 @@ module.exports = {
     'assets/scss/main.scss'
   ],
   modules: [
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
   ],
   plugins: ['~/plugins/axios.js',
     {src: '~/plugins/localStorage.js', ssr: false},
     {src: '~/plugins/offline.js', ssr: false},
     {src: '~/plugins/lazyload.js', ssr: false},
+    {src: '~/plugins/smoothScroll.js', ssr: false},
   ],
   env: {
     API_URL: isDev ? 'http://127.0.0.1:8000' : 'https://api.edusanjal.com/'
@@ -40,7 +41,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    vendor: ['axios', 'babel-polyfill'],
+    vendor: ['axios'],
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
         config.module.rules.push({
