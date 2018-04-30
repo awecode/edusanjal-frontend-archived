@@ -2,7 +2,7 @@
     <div>
         <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
         <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
-            <div class="container">
+            <div class="container logo-container">
                 <img class="logo" :src="obj.logo" :alt="obj.name"/>
             </div>
             <div class="footer">
@@ -155,11 +155,16 @@
                 width: auto;
                 margin-right: 1rem;
             }
+
+            .logo-container {
+                display: flex;
+               align-items: center;
+            }
             /* Move boards to left */
             /*.boards{*/
-                /*position: absolute;*/
-                /*left: 1rem;*/
-                /*line-height: 2rem;*/
+            /*position: absolute;*/
+            /*left: 1rem;*/
+            /*line-height: 2rem;*/
             /*}*/
             /*margin-bottom: 1rem;*/
         }
