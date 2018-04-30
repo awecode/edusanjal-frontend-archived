@@ -94,6 +94,21 @@ i.gap:before {
   content: '';
 }
 
-.container{
+.container {
   padding: 0 1rem;
+}
+
+.tabs.is-toggle {
+  ul {
+    li {
+      background: $primary;
+      a {
+        color: #fff;
+      }
+    }
+    li.is-active {
+      line-height: 3rem;
+      margin-bottom: 1rem;
+    }
+  }
 }

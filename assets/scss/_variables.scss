@@ -7,3 +7,7 @@ $link: $primary;
 //$tabs-link-color: $primary;
 $tabs-border-bottom-color: transparent;
 $tabs-border-bottom-width: 2px;
+$tabs-toggle-link-active-background-color: lighten($primary, 5);
+$tabs-boxed-link-hover-background-color: $primary;
+$tabs-toggle-link-border-color: #fff;
+$tabs-toggle-link-active-border-color: #fff;

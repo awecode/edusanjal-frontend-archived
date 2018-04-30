@@ -22,9 +22,9 @@
                 <li class="is-active"><a>About</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a>Courses</a></li>
-                <li><a>Features</a></li>
-                <li><a>Guidelines</a></li>
-                <li><a>Scholarship</a></li>
+                <li v-if="obj.salient_features"><a>Features</a></li>
+                <li v-if="obj.admission_guidelines"><a>Guidelines</a></li>
+                <li v-if="obj.scholarship_information"><a>Scholarship</a></li>
                 <li><a>Contact</a></li>
             </ul>
         </div>
@@ -52,22 +52,39 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="gallery" class="gallery">
-            <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
-            <div class="bg-primary has-text-centered">
-                <div class="grid">
-                    <img v-for="image in obj.images" :src="image.url.small" :key="image.name">
+            <div id="gallery" class="gallery">
+                <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
+                <div class="bg-primary has-text-centered">
+                    <div class="grid">
+                        <img v-for="image in obj.images" :src="image.url.small" :key="image.name">
+                    </div>
                 </div>
             </div>
         </div>
+
+        <h2 class="is-uppercase has-text-centered mt3">More Information</h2>
+
+        <div class="more-info container">
+            <div class="tabs info-tabs is-toggle is-large is-fullwidth">
+                <ul>
+                    <li :class="{'is-active': activeTab == 'courses'}" @click="activateTab('courses')">
+                        <a>Offering Courses</a></li>
+                    <li v-if="obj.salient_features" :class="{'is-active': activeTab == 'features'}"
+                        @click="activateTab('features')"><a>Salient Features</a></li>
+                    <li v-if="obj.admission_guidelines" :class="{'is-active': activeTab == 'admission'}"
+                        @click="activateTab('admission')"><a>Admission Guidelines</a></li>
+                    <li v-if="obj.scholarship_information" :class="{'is-active': activeTab == 'scholarship'}"
+                        @click="activateTab('scholarship')"><a>Scholarship Info</a></li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
   import Verified from '@/components/Verified.vue'
   import Bricks from 'bricks.js'
-
 
   export default {
     remote: true,
@@ -92,6 +109,16 @@
       obj() {
         return this.$store.state.collection[this.$options.collection].objects[this.$route.params[this.$options.key]];
       },
+    },
+    data() {
+      return {
+        activeTab: 'courses'
+      }
+    },
+    methods: {
+      activateTab(tab) {
+        this.activeTab = tab;
+      }
     },
     async mounted() {
       if (this.$options.remote) {
@@ -153,6 +180,14 @@
 
     }
 
+    .institute-tabs {
+        text-transform: uppercase;
+        border-bottom: 1px solid #ccc;
+        line-height: 2rem;
+        font-size: .9rem;
+        margin-bottom: 0 !important;
+    }
+
     .gallery {
         .bg-primary {
             padding: 10px;
@@ -160,14 +195,6 @@
         .grid {
             margin: 0 auto;
         }
-    }
-
-    .institute-tabs {
-        text-transform: uppercase;
-        border-bottom: 1px solid #ccc;
-        line-height: 2rem;
-        font-size: .9rem;
-        margin-bottom: 0 !important;
     }
 
     @media (max-width: 769px) {
