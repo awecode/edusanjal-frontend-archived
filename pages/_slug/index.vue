@@ -53,18 +53,21 @@
                 </div>
             </div>
         </div>
-        <div class="gallery" id="gallery">
+        <div id="gallery" class="gallery">
             <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
             <div class="bg-primary has-text-centered">
-                <img v-for="image in obj.images" :data-src="image.url.small" :key="image.name">
+                <div class="grid">
+                    <img v-for="image in obj.images" :src="image.url.small" :key="image.name">
+                </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
-  import Verified from '@/components/Verified.vue';
+  import Verified from '@/components/Verified.vue'
+  import Bricks from 'bricks.js'
+
 
   export default {
     remote: true,
@@ -96,6 +99,27 @@
       } else {
         await this.$store.dispatch('collection/get_item', [this.$options.collection, this.$route.params[this.$options.key]]);
       }
+
+      // padding(left+right) = 20px; gutter=10px; width_per_column = 300px
+      // formula: 20 + width_per_column * no_of_columns + (no_of_columns - 1) *gutter
+      // i.e. 20 + 300n + 10(n-1)
+      // i.e. 310n + 10
+      const sizes = [
+        {columns: 1, gutter: 10}, // assumed to be mobile, because of the missing mq property
+        {columns: 2, gutter: 10, mq: '630px'},
+        {columns: 3, gutter: 10, mq: '940px'},
+        {columns: 4, gutter: 5, mq: '1250px'},
+        {columns: 5, gutter: 10, mq: '1560px'},
+        {columns: 6, gutter: 10, mq: '1870px'},
+        {columns: 7, gutter: 10, mq: '2180px'},
+        {columns: 8, gutter: 10, mq: '2490px'},
+      ];
+
+      const instance = Bricks({
+        container: '.gallery .grid',
+        packed: 'packed',
+        sizes: sizes,
+      }).resize(true).pack();
     },
   }
 </script>
@@ -129,9 +153,13 @@
 
     }
 
-    .gallery img {
-        max-height: 800px;
-        max-width: 800px;
+    .gallery {
+        .bg-primary {
+            padding: 10px;
+        }
+        .grid {
+            margin: 0 auto;
+        }
     }
 
     .institute-tabs {
@@ -158,7 +186,7 @@
 
             .logo-container {
                 display: flex;
-               align-items: center;
+                align-items: center;
             }
             /* Move boards to left */
             /*.boards{*/
