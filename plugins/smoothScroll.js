@@ -4,7 +4,9 @@ let smoothScroll = (function (root) {
   root.addEventListener('transitionend', function (e) {
     root.style['transition'] = '';
     root.style['transform'] = '';
-    targetElement.scrollIntoView();
+    if (targetElement) {
+      targetElement.scrollIntoView();
+    }
   });
   return function (element, time) {
     if (element) {

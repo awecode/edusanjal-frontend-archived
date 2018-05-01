@@ -58,6 +58,10 @@ strong {
   padding-top: 2rem;
 }
 
+.p1{
+  padding: 1rem;
+}
+
 h1 {
   font-size: 2.7rem;
 }
@@ -99,7 +103,9 @@ i.gap:before {
 }
 
 .tabs.is-toggle {
+  margin: 0;
   ul {
+    margin-bottom: -1rem;
     li {
       background: $primary;
       a {

@@ -21,7 +21,7 @@
             <ul class="container">
                 <li class="is-active"><a>About</a></li>
                 <li><a href="#gallery">Gallery</a></li>
-                <li><a>Courses</a></li>
+                <li><a>Programs</a></li>
                 <li v-if="obj.salient_features"><a>Features</a></li>
                 <li v-if="obj.admission_guidelines"><a>Guidelines</a></li>
                 <li v-if="obj.scholarship_information"><a>Scholarship</a></li>
@@ -67,8 +67,8 @@
         <div class="more-info container">
             <div class="tabs info-tabs is-toggle is-large is-fullwidth">
                 <ul>
-                    <li :class="{'is-active': activeTab == 'courses'}" @click="activateTab('courses')">
-                        <a>Offering Courses</a></li>
+                    <li :class="{'is-active': activeTab == 'programs'}" @click="activateTab('programs')">
+                        <a>Offered Programs</a></li>
                     <li v-if="obj.salient_features" :class="{'is-active': activeTab == 'features'}"
                         @click="activateTab('features')"><a>Salient Features</a></li>
                     <li v-if="obj.admission_guidelines" :class="{'is-active': activeTab == 'admission'}"
@@ -76,6 +76,21 @@
                     <li v-if="obj.scholarship_information" :class="{'is-active': activeTab == 'scholarship'}"
                         @click="activateTab('scholarship')"><a>Scholarship Info</a></li>
                 </ul>
+            </div>
+            <div class="tab-content-container bg-grey p1">
+                <div class="tab-content" v-if="activeTab=='programs'">
+                    <ul v-for="(programs, level, index) in levels" :key="level">
+                        <hr v-if="index!==0"/>
+                        <h4><strong>{{level}}</strong></h4>
+                        <li v-for="program in programs" :key="program.slug">
+                            {{program.name}}
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="tab-content" v-if="activeTab=='features'" v-html="obj.salient_features"></div>
+                <div class="tab-content" v-if="activeTab=='admission'" v-html="obj.admission_guidelines"></div>
+                <div class="tab-content" v-if="activeTab=='scholarship'" v-html="obj.scholarship_information"></div>
             </div>
         </div>
 
@@ -109,10 +124,18 @@
       obj() {
         return this.$store.state.collection[this.$options.collection].objects[this.$route.params[this.$options.key]];
       },
+      levels() {
+        let dct = {};
+        this.obj.programs.forEach(function (program) {
+          dct[program.level] = dct[program.level] || [];
+          dct[program.level].push(program)
+        });
+        return dct;
+      }
     },
     data() {
       return {
-        activeTab: 'courses'
+        activeTab: 'programs'
       }
     },
     methods: {
