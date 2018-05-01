@@ -5,7 +5,7 @@
   "author": "Awecode <info@awecode.com>",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "HOST=0.0.0.0 PORT=3000 nuxt",
     "build": "NODE_ENV=production nuxt build",
     "start": "nuxt start",
     "generate": "NODE_ENV=production nuxt generate",
@@ -23,6 +23,7 @@
     "bricks.js": "^1.8.0",
     "bulma": "^0.6.2",
     "nuxt": "^1.0.0",
+    "smooth-scroll": "^12.1.5",
     "vanilla-lazyload": "^8.7.1",
     "vuex-persistedstate": "^2.5.2"
   },

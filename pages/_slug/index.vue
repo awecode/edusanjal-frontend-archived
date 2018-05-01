@@ -20,11 +20,11 @@
         <div class="tabs institute-tabs">
             <ul class="container">
                 <li class="is-active"><a>About</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a>Programs</a></li>
-                <li v-if="obj.salient_features"><a>Features</a></li>
-                <li v-if="obj.admission_guidelines"><a>Guidelines</a></li>
-                <li v-if="obj.scholarship_information"><a>Scholarship</a></li>
+                <li v-if="obj.images.length"><a href="#gallery">Gallery</a></li>
+                <li v-if="obj.programs.length"><a @click="activateTab('programs')">Programs</a></li>
+                <li v-if="obj.salient_features"><a @click="activateTab('features')">Features</a></li>
+                <li v-if="obj.admission_guidelines"><a @click="activateTab('admission')">Admission</a></li>
+                <li v-if="obj.scholarship_information"><a @click="activateTab('scholarship')">Scholarship</a></li>
                 <li><a>Contact</a></li>
             </ul>
         </div>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div id="gallery" class="gallery">
+            <div id="gallery" class="gallery" v-if="obj.images.length">
                 <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
                 <div class="bg-primary has-text-centered">
                     <div class="grid">
@@ -78,19 +78,27 @@
                 </ul>
             </div>
             <div class="tab-content-container bg-grey p1">
-                <div class="tab-content" v-if="activeTab=='programs'">
-                    <ul v-for="(programs, level, index) in levels" :key="level">
-                        <hr v-if="index!==0"/>
-                        <h4><strong>{{level}}</strong></h4>
-                        <li v-for="program in programs" :key="program.slug">
-                            {{program.name}}
-                        </li>
+                <div id="programs">
+                    <div class="tab-content" v-if="activeTab=='programs'">
+                        <ul v-for="(programs, level, index) in levels" :key="level">
+                            <hr v-if="index!==0"/>
+                            <h4><strong>{{level}}</strong></h4>
+                            <li v-for="program in programs" :key="program.slug">
+                                {{program.name}}
+                            </li>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-                <div class="tab-content" v-if="activeTab=='features'" v-html="obj.salient_features"></div>
-                <div class="tab-content" v-if="activeTab=='admission'" v-html="obj.admission_guidelines"></div>
-                <div class="tab-content" v-if="activeTab=='scholarship'" v-html="obj.scholarship_information"></div>
+                <div id="features">
+                    <div class="tab-content" v-if="activeTab=='features'" v-html="obj.salient_features"></div>
+                </div>
+                <div id="admission">
+                    <div class="tab-content" v-if="activeTab=='admission'" v-html="obj.admission_guidelines"></div>
+                </div>
+                <div id="scholarship">
+                    <div class="tab-content" v-if="activeTab=='scholarship'" v-html="obj.scholarship_information"></div>
+                </div>
             </div>
         </div>
 
@@ -141,6 +149,12 @@
     methods: {
       activateTab(tab) {
         this.activeTab = tab;
+        let el = document.getElementById(tab);
+        if (el) {
+          el.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
       }
     },
     async mounted() {

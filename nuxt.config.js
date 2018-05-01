@@ -32,7 +32,7 @@ module.exports = {
     {src: '~/plugins/smoothScroll.js', ssr: false},
   ],
   env: {
-    API_URL: isDev ? 'http://127.0.0.1:8000' : 'https://api.edusanjal.com/'
+    API_URL: isDev ? 'http://192.168.0.143:8000' : 'https://api.edusanjal.com/'
   },
   /*
   ** Build configuration
