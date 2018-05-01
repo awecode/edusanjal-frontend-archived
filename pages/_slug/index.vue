@@ -56,10 +56,11 @@
                 <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
                 <div class="bg-primary has-text-centered">
                     <div class="grid">
-                        <img v-for="image in obj.images" :src="image.url.small" :key="image.name" :data-bp="image.url.full"
-                             :title="image.name" :alt="image.name" :caption="image.name">
+                        <img v-for="image in obj.images" :data-src="image.url.small" :key="image.name" :data-bp="image.url.full"
+                             :title="image.name" :alt="image.name" :caption="image.name" :height="image.thumb_height"
+                             :style="{ height: image.thumb_height + 'px' }">
                         <!--<a v-for="(image, index) in obj.images" :href="image.url.full" :key="image.name+index">-->
-                            <!--<img :data-bp="image.url.full" :src="image.url.small" :title="image.name" :alt="image.name">-->
+                        <!--<img :data-bp="image.url.full" :src="image.url.small" :title="image.name" :alt="image.name">-->
                         <!--</a>-->
                     </div>
                 </div>
@@ -172,6 +173,11 @@
         await this.$store.dispatch('collection/get_item', [this.$options.collection, this.$route.params[this.$options.key]]);
       }
 
+      if (this.$route.hash) {
+        this.activateTab(this.$route.hash.replace('#', ''));
+      }
+
+      // Computation of brick size by screen size
       // padding(left+right) = 20px; gutter=10px; width_per_column = 300px
       // formula: 20 + width_per_column * no_of_columns + (no_of_columns - 1) *gutter
       // i.e. 20 + 300n + 10(n-1)
@@ -187,26 +193,41 @@
         {columns: 8, gutter: 10, mq: '2490px'},
       ];
 
-      const instance = Bricks({
-        container: '.gallery .grid',
-        packed: 'packed',
-        sizes: sizes,
-      }).resize(true).pack();
 
-      if (this.$route.hash) {
-        this.activateTab(this.$route.hash.replace('#', ''));
-      }
-
-      var imageLinks = document.querySelectorAll('#gallery .grid img')
-      for (var i = 0; i < imageLinks.length; i++) {
+      // Lightbox
+      let imageLinks = document.querySelectorAll('#gallery .grid img');
+      for (let i = 0; i < imageLinks.length; i++) {
         imageLinks[i].addEventListener('click', function (e) {
-          e.preventDefault()
+          e.preventDefault();
           BigPicture({
             el: e.target,
             gallery: '#gallery .grid'
           })
         })
       }
+
+      // Lazyload images, instantiate Bricks after lazyload complete      
+      let counter = 0;
+      let lazyload = new LazyLoad({
+          callback_set: function (a) {
+            if (a.hasAttribute('data-src')) {
+              counter++;
+            }
+            if (counter === imageLinks.length) {
+              // TODO find a way without setTimeout              
+              setTimeout(function () {
+                Bricks({
+                  container: '.gallery .grid',
+                  packed: 'packed',
+                  sizes: sizes,
+                }).resize(true).pack();
+              }, 99);
+            }
+          }
+        }
+      );
+
+
     },
   }
 </script>
@@ -255,7 +276,7 @@
         .grid {
             margin: 0 auto;
         }
-        img[caption]{
+        img[caption] {
             cursor: pointer;
         }
     }
