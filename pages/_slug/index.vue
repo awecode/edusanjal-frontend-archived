@@ -78,8 +78,8 @@
                 </ul>
             </div>
             <div class="tab-content-container bg-grey p1">
-                <div id="programs">
-                    <div class="tab-content" v-if="activeTab=='programs'">
+                <div id="programs" class="tab-content">
+                    <div v-if="activeTab=='programs'">
                         <ul v-for="(programs, level, index) in levels" :key="level">
                             <hr v-if="index!==0"/>
                             <h4><strong>{{level}}</strong></h4>
@@ -90,13 +90,13 @@
                         </ul>
                     </div>
                 </div>
-                <div id="features">
+                <div id="features" class="tab-content">
                     <div class="tab-content" v-if="activeTab=='features'" v-html="obj.salient_features"></div>
                 </div>
-                <div id="admission">
+                <div id="admission" class="tab-content">
                     <div class="tab-content" v-if="activeTab=='admission'" v-html="obj.admission_guidelines"></div>
                 </div>
-                <div id="scholarship">
+                <div id="scholarship" class="tab-content">
                     <div class="tab-content" v-if="activeTab=='scholarship'" v-html="obj.scholarship_information"></div>
                 </div>
             </div>
@@ -148,13 +148,13 @@
     },
     methods: {
       activateTab(tab) {
-        this.activeTab = tab;
         let el = document.getElementById(tab);
-        if (el) {
-          el.scrollIntoView({
-            behavior: 'smooth'
-          });
+        // find if hash is a tab
+        if (el.classList.contains('tab-content')) {
+          this.activeTab = tab;
         }
+        smoothScroll(el);
+        window.location.hash = tab;
       }
     },
     async mounted() {
@@ -184,6 +184,10 @@
         packed: 'packed',
         sizes: sizes,
       }).resize(true).pack();
+
+      if (this.$route.hash) {
+        this.activateTab(this.$route.hash.replace('#', ''));
+      }
     },
   }
 </script>

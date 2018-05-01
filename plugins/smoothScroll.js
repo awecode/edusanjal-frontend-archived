@@ -1,3 +1,4 @@
 import SmoothScroll from 'smooth-scroll';
 
-new SmoothScroll('a[href*="#"]');
+let smoothScroll = new SmoothScroll('a[href*="#"]');
+window.smoothScroll = smoothScroll.animateScroll; 
