@@ -7,11 +7,13 @@ let smoothScroll = (function (root) {
     targetElement.scrollIntoView();
   });
   return function (element, time) {
-    let offset = element.offsetTop - (window.scrollY || document.documentElement.scrollTop || root.scrollTop);
-    offset = Math.min(offset, root.offsetHeight - document.documentElement.clientHeight);
-    targetElement = element;
-    root.style['transition'] = 'transform ' + time;
-    root.style['transform'] = 'translateY(' + offset * -1 + 'px)';
+    if (element) {
+      let offset = element.offsetTop - (window.scrollY || document.documentElement.scrollTop || root.scrollTop);
+      offset = Math.min(offset, root.offsetHeight - document.documentElement.clientHeight);
+      targetElement = element;
+      root.style['transition'] = 'transform ' + time;
+      root.style['transform'] = 'translateY(' + offset * -1 + 'px)';
+    }
   }
 }(document.body));
 
