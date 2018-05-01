@@ -111,4 +111,7 @@ i.gap:before {
       margin-bottom: 1rem;
     }
   }
+  a:hover {
+    background-color: $tabs-toggle-link-active-background-color;
+  }
 }
