@@ -56,7 +56,11 @@
                 <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
                 <div class="bg-primary has-text-centered">
                     <div class="grid">
-                        <img v-for="image in obj.images" :src="image.url.small" :key="image.name">
+                        <img v-for="image in obj.images" :src="image.url.small" :key="image.name" :data-bp="image.url.full"
+                             :title="image.name" :alt="image.name" :caption="image.name">
+                        <!--<a v-for="(image, index) in obj.images" :href="image.url.full" :key="image.name+index">-->
+                            <!--<img :data-bp="image.url.full" :src="image.url.small" :title="image.name" :alt="image.name">-->
+                        <!--</a>-->
                     </div>
                 </div>
             </div>
@@ -108,6 +112,10 @@
 <script>
   import Verified from '@/components/Verified.vue'
   import Bricks from 'bricks.js'
+
+  if (process.browser && window) {
+    window.BigPicture = require('bigpicture')
+  }
 
   export default {
     remote: true,
@@ -188,6 +196,17 @@
       if (this.$route.hash) {
         this.activateTab(this.$route.hash.replace('#', ''));
       }
+
+      var imageLinks = document.querySelectorAll('#gallery .grid img')
+      for (var i = 0; i < imageLinks.length; i++) {
+        imageLinks[i].addEventListener('click', function (e) {
+          e.preventDefault()
+          BigPicture({
+            el: e.target,
+            gallery: '#gallery .grid'
+          })
+        })
+      }
     },
   }
 </script>
@@ -235,6 +254,9 @@
         }
         .grid {
             margin: 0 auto;
+        }
+        img[caption]{
+            cursor: pointer;
         }
     }
 
