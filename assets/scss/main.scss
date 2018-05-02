@@ -1,4 +1,5 @@
 @import 'variables';
+
 //@import '~bulma';
 @import "~bulma/sass/utilities/all";
 @import "~bulma/sass/base/all";
@@ -6,7 +7,10 @@
 @import "~bulma/sass/components/tabs";
 @import "~bulma/sass/components/card";
 @import "~bulma/sass/grid/columns";
+
 //@import 'mixins';
+
+@import 'carousel';
 
 .navbar-brand .navbar-item {
   min-width: 9rem;
@@ -75,6 +79,10 @@ h2 {
 
 .bg-primary {
   background: $primary;
+  color: #fff;
+  a{
+    color: #fff;
+  }
 }
 
 .bg-grey {
