@@ -1,118 +1,16 @@
 <template>
     <div>
-        <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
-        <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
-            <div class="container logo-container">
-                <img class="logo" :src="obj.logo" :alt="obj.name"/>
-            </div>
-            <div class="footer">
-                <div class="container">
-                    <div>
-                        <h1>{{obj.name}}</h1>
-                        <Verified v-if="obj.verified"/>
-                    </div>
-                    <div class="boards">
-                        <strong class="is-uppercase" v-for="board in obj.boards" :key="board.slug">{{board.name}}</strong>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="tabs institute-tabs">
-            <ul class="container">
-                <li class="is-active"><a>About</a></li>
-                <li v-if="obj.images.length"><a href="#gallery">Gallery</a></li>
-                <li v-if="obj.programs.length"><a @click="activateTab('programs')">Programs</a></li>
-                <li v-if="obj.salient_features"><a @click="activateTab('features')">Features</a></li>
-                <li v-if="obj.admission_guidelines"><a @click="activateTab('admission')">Admission</a></li>
-                <li v-if="obj.scholarship_information"><a @click="activateTab('scholarship')">Scholarship</a></li>
-                <li><a>Contact</a></li>
-            </ul>
-        </div>
-        <div class="bg-grey">
-            <div class="container columns pt2">
-                <div class="column is-three-fifths">
-                    <div class="description" v-html="obj.description"></div>
-                </div>
-                <div class="column is-two-fifths">
-                    <div class="card">
-                        <div class="card-content info">
-                            <div v-if="obj.established"><i class="gap"></i>ESTD:<i class="gap"></i>{{obj.established}}</div>
-                            <div v-if="obj.address"><i class="gap"></i>{{obj.address}}</div>
-                            <div v-if="obj.type"><i class="gap"></i>{{obj.type}}</div>
-                            <div v-if="obj.phone"><i class="gap"></i><span class="csv" v-for="ph in obj.phone" :key="ph">
-        <a :href="'tel:'+ph">{{ph}}</a>
-        </span></div>
-                            <div v-if="obj.email"><i class="gap"></i><span class="csv" v-for="em in obj.email" :key="em">
-        <a :href="'mailto:'+em">{{em}}</a>
-        </span></div>
-                            <div v-if="obj.website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener"
-                                                                          :href="obj.website">{{obj.website}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="gallery" class="gallery" v-if="obj.images.length">
-                <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
-                <div class="bg-primary has-text-centered">
-                    <div class="grid">
-                        <img v-for="image in obj.images" :data-src="image.url.small" :key="image.name" :data-bp="image.url.full"
-                             :title="image.name" :alt="image.name" :caption="image.name" :height="image.thumb_height"
-                             :style="{ height: image.thumb_height + 'px' }">
-                        <!--<a v-for="(image, index) in obj.images" :href="image.url.full" :key="image.name+index">-->
-                        <!--<img :data-bp="image.url.full" :src="image.url.small" :title="image.name" :alt="image.name">-->
-                        <!--</a>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="is-uppercase has-text-centered mt3">More Information</h2>
-
-        <div class="more-info container">
-            <div class="tabs info-tabs is-toggle is-large is-fullwidth">
-                <ul>
-                    <li :class="{'is-active': activeTab == 'programs'}" @click="activateTab('programs')">
-                        <a>Offered Programs</a></li>
-                    <li v-if="obj.salient_features" :class="{'is-active': activeTab == 'features'}"
-                        @click="activateTab('features')"><a>Salient Features</a></li>
-                    <li v-if="obj.admission_guidelines" :class="{'is-active': activeTab == 'admission'}"
-                        @click="activateTab('admission')"><a>Admission Guidelines</a></li>
-                    <li v-if="obj.scholarship_information" :class="{'is-active': activeTab == 'scholarship'}"
-                        @click="activateTab('scholarship')"><a>Scholarship Info</a></li>
-                </ul>
-            </div>
-            <div class="tab-content-container bg-grey p1">
-                <div id="programs" class="tab-content">
-                    <div v-if="activeTab=='programs'">
-                        <ul v-for="(programs, level, index) in levels" :key="level">
-                            <hr v-if="index!==0"/>
-                            <h4><strong>{{level}}</strong></h4>
-                            <li v-for="program in programs" :key="program.slug">
-                                {{program.name}}
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div id="features" class="tab-content">
-                    <div class="tab-content" v-if="activeTab=='features'" v-html="obj.salient_features"></div>
-                </div>
-                <div id="admission" class="tab-content">
-                    <div class="tab-content" v-if="activeTab=='admission'" v-html="obj.admission_guidelines"></div>
-                </div>
-                <div id="scholarship" class="tab-content">
-                    <div class="tab-content" v-if="activeTab=='scholarship'" v-html="obj.scholarship_information"></div>
-                </div>
-            </div>
-        </div>
-
+        <no-ssr>
+            <GMap/>
+        </no-ssr>
     </div>
 </template>
 
 <script>
   import Verified from '@/components/Verified.vue'
+  import GMap from '@/components/Map.vue'
   import Bricks from 'bricks.js'
+  import NoSsr from "../../.nuxt/components/no-ssr";
 
   if (process.browser && window) {
     window.BigPicture = require('bigpicture')
@@ -120,7 +18,10 @@
 
   export default {
     remote: true,
-    components: {Verified},
+    components: {
+      NoSsr,
+      Verified, GMap
+    },
     collection: 'institutes',
     key: 'slug',
     validate({params}) {
@@ -194,39 +95,38 @@
       ];
 
 
-      // Lightbox
-      let imageLinks = document.querySelectorAll('#gallery .grid img');
-      for (let i = 0; i < imageLinks.length; i++) {
-        imageLinks[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          BigPicture({
-            el: e.target,
-            gallery: '#gallery .grid'
-          })
-        })
-      }
-
-      // Lazyload images, instantiate Bricks after lazyload complete      
-      let counter = 0;
-      let lazyload = new LazyLoad({
-          callback_set: function (a) {
-            if (a.hasAttribute('data-src')) {
-              counter++;
-            }
-            if (counter === imageLinks.length) {
-              // TODO find a way without setTimeout              
-              setTimeout(function () {
-                Bricks({
-                  container: '.gallery .grid',
-                  packed: 'packed',
-                  sizes: sizes,
-                }).resize(true).pack();
-              }, 99);
-            }
-          }
-        }
-      );
-
+//      // Lightbox
+//      let imageLinks = document.querySelectorAll('#gallery .grid img');
+//      for (let i = 0; i < imageLinks.length; i++) {
+//        imageLinks[i].addEventListener('click', function (e) {
+//          e.preventDefault();
+//          BigPicture({
+//            el: e.target,
+//            gallery: '#gallery .grid'
+//          })
+//        })
+//      }
+//
+//      // Lazyload images, instantiate Bricks after lazyload complete      
+//      let counter = 0;
+//      let lazyload = new LazyLoad({
+//          callback_set: function (a) {
+//            if (a.hasAttribute('data-src')) {
+//              counter++;
+//            }
+//            if (counter === imageLinks.length) {
+//              // TODO find a way without setTimeout              
+//              setTimeout(function () {
+//                Bricks({
+//                  container: '.gallery .grid',
+//                  packed: 'packed',
+//                  sizes: sizes,
+//                }).resize(true).pack();
+//              }, 99);
+//            }
+//          }
+//        }
+//      );
 
     },
   }
