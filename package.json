@@ -26,6 +26,7 @@
     "nuxt": "^1.0.0",
     "smooth-scroll": "^12.1.5",
     "vanilla-lazyload": "^8.7.1",
+    "vue-carousel": "^0.7.3",
     "vuex-persistedstate": "^2.5.2"
   },
   "devDependencies": {

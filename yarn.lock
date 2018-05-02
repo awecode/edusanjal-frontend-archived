@@ -9281,6 +9281,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-carousel@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/vue-carousel/-/vue-carousel-0.7.3.tgz#5febab5bb3be4bd12ada37df22efd189f8789465"
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
