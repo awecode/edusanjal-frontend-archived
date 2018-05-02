@@ -25,7 +25,9 @@ module.exports = {
   modules: [
     // '@nuxtjs/pwa',
   ],
-  plugins: ['~/plugins/axios.js',
+  plugins: [
+    '~/plugins/axios.js',
+    '~/plugins/config.js',
     {src: '~/plugins/localStorage.js', ssr: false},
     {src: '~/plugins/offline.js', ssr: false},
     {src: '~/plugins/lazyload.js', ssr: false},

@@ -31,7 +31,7 @@
       if (window.google) {
         window.initMap();
       } else {
-        ClientUtils.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH8iZPmK6CMd5kecnwLHDx4GnViREzBxM&v=3&callback=initMap');
+        ClientUtils.loadScript(`https://maps.googleapis.com/maps/api/js?key=${config.googleMapKey}&v=3&callback=initMap`);
       }
     }
   };
