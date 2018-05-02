@@ -35,7 +35,7 @@
 
 <style scoped>
     .g-map {
-        height: 600px;
+        height: 400px;
         margin: 0 auto;
         background: gray;
     }
