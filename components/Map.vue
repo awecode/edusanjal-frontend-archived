@@ -4,14 +4,16 @@
 
 <script>
   export default {
-    props: ['lat', 'lng'],
+    props: {
+      'lat': {}, 'lng': {}, 'zoom': {default: 14}
+    },
     mounted: function () {
 
       window.initMap = () => {
         const el = document.getElementById('g-map');
         const latLng = new google.maps.LatLng(this.lat, this.lng);
         const options = {
-          zoom: 14,
+          zoom: this.zoom,
           center: latLng
         };
         const map = new google.maps.Map(el, options);
