@@ -1,7 +1,7 @@
 <template>
     <div>
         <no-ssr>
-            <GMap/>
+            <GMap :lat="obj.latitude" :lng="obj.longitude"/>
         </no-ssr>
     </div>
 </template>

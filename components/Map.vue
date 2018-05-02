@@ -1,45 +1,38 @@
 <template>
-    <div class="google-map" id="gmap">Hey</div>
+    <div class="g-map" id="g-map">Hey</div>
 </template>
 
 <script>
   export default {
-    data: function () {
-      return {
-        mapName: "gmap",
-        markerCoordinates: [{
-          latitude: 51.501527,
-          longitude: -0.1921837
-        }, {
-          latitude: 51.505874,
-          longitude: -0.1838486
-        }, {
-          latitude: 51.4998973,
-          longitude: -0.202432
-        }]
-      }
-    },
+    props: ['lat', 'lng'],
     mounted: function () {
+
       window.initMap = () => {
-        const element = document.getElementById('gmap');
+        const el = document.getElementById('g-map');
+        const latLng = new google.maps.LatLng(this.lat, this.lng);
         const options = {
           zoom: 14,
-          center: new google.maps.LatLng(51.501527, -0.1921837)
+          center: latLng
         };
-        const map = new google.maps.Map(element, options);
+        const map = new google.maps.Map(el, options);
+        const marker = new google.maps.Marker({
+          position: latLng,
+        });
+        marker.setMap(map);
       };
+
       if (window.google) {
         window.initMap();
       } else {
         ClientUtils.loadScript(`https://maps.googleapis.com/maps/api/js?key=${config.googleMapKey}&v=3&callback=initMap`);
       }
+
     }
   };
 </script>
 
 <style scoped>
-    .google-map {
-        width: 800px;
+    .g-map {
         height: 600px;
         margin: 0 auto;
         background: gray;
