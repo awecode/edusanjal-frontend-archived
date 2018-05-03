@@ -116,7 +116,7 @@
                         <carousel :navigationEnabled="true">
                             <slide v-for="ins in obj.network_institutes" :key="ins.slug">
                                 <nuxt-link :to="{name: 'slug', params: {slug: ins.slug}}">
-                                    <img :src="ins.logo.small" height="100" width="100"/>
+                                    <img :data-src="ins.logo.small" height="100" width="100"/>
                                 </nuxt-link>
 
                                 <nuxt-link :to="{name: 'slug', params: {slug: ins.slug}}">{{ins.name}}</nuxt-link>
@@ -234,7 +234,6 @@
           })
         })
       }
-
       // Lazyload images, instantiate Bricks after lazyload complete
       let counter = 0;
       let lazyload = new LazyLoad({
@@ -242,7 +241,7 @@
             if (a.hasAttribute('data-src')) {
               counter++;
             }
-            if (counter === imageLinks.length) {
+            if (counter && counter === imageLinks.length) {
               // TODO find a way without setTimeout
               setTimeout(function () {
                 Bricks({
