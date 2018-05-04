@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="isStatic" class="has-text-centered" id="static-map-wrapper">
-            <img :src="staticUrl" alt="Map" title="Click to browse" @click="loadDynamic"/>
+            <img :data-src="staticUrl" alt="Map" title="Click to browse" @click="loadDynamic"/>
         </div>
         <div v-else class="g-map" id="g-map"></div>
     </div>
@@ -59,6 +59,6 @@
     .g-map {
         height: 400px;
         margin: 0 auto;
-        background: gray;
+        background: #ebe8de;
     }
 </style>
