@@ -1,5 +1,10 @@
 <template>
-    <div class="g-map" id="g-map">Hey</div>
+    <div>
+        <div v-if="isStatic" class="has-text-centered" id="static-map-wrapper">
+            <img :src="staticUrl" alt="Map" title="Click to browse" @click="loadDynamic"/>
+        </div>
+        <div v-else class="g-map" id="g-map"></div>
+    </div>
 </template>
 
 <script>
@@ -7,8 +12,21 @@
     props: {
       'lat': {}, 'lng': {}, 'zoom': {default: 14}
     },
-    mounted: function () {
-
+    data() {
+      return {
+        isStatic: true,
+        staticWidth: 640,
+        staticHeight: 400,
+        key: config.googleMapKey,
+      }
+    },
+    computed: {
+      staticUrl() {
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=${this.zoom}&maptype=roadmap
+&markers=${this.lat},${this.lng}&key=${this.key}&size=${this.staticWidth}x${this.staticHeight}`;
+      }
+    },
+    mounted() {
       window.initMap = () => {
         const el = document.getElementById('g-map');
         const latLng = new google.maps.LatLng(this.lat, this.lng);
@@ -23,12 +41,16 @@
         marker.setMap(map);
       };
 
-      if (window.google) {
-        window.initMap();
-      } else {
-        ClientUtils.loadScript(`https://maps.googleapis.com/maps/api/js?key=${config.googleMapKey}&v=3&callback=initMap`);
+    },
+    methods: {
+      loadDynamic() {
+        this.isStatic = false;
+        if (window.google && google.maps) {
+          window.initMap();
+        } else {
+          ClientUtils.loadScript(`https://maps.googleapis.com/maps/api/js?key=${this.key}&v=3&callback=initMap`);
+        }
       }
-
     }
   };
 </script>

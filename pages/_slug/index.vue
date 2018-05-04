@@ -118,7 +118,6 @@
   import Verified from '@/components/Verified.vue'
   import GMap from '@/components/Map.vue'
   import Bricks from 'bricks.js'
-  import NoSsr from "../../.nuxt/components/no-ssr";
 
   if (process.browser && window) {
     window.BigPicture = require('bigpicture')
@@ -127,7 +126,6 @@
   export default {
     remote: true,
     components: {
-      NoSsr,
       Verified, GMap
     },
     collection: 'institutes',
