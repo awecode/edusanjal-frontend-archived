@@ -34,7 +34,8 @@ module.exports = {
     {src: '~/plugins/smoothScroll.js', ssr: false},
     {src: '~/plugins/clientUtils.js', ssr: false},
     {src: '~/plugins/fontAwesome.js', ssr: false},
-    {src: '~/plugins/faComponent.js', ssr: true},
+    {src: '~/plugins/faComponent.js'},
+    // {src: '~/plugins/utils.js'},
   ],
   env: {
     API_URL: isDev ? 'http://192.168.0.143:8000' : 'https://api.edusanjal.com/'
