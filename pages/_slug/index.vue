@@ -38,10 +38,10 @@
                         <div class="card-content info">
                             <div v-if="obj.established"><i class="gap"></i>ESTD:<i class="gap"></i>{{obj.established}}</div>
                             <div v-if="obj.address"><FA i="location-arrow"/>{{obj.address}}</div>
-                            <!--<div v-if="obj.type"><fa i="fa-building"/>{{obj.type}}</div>-->
-                            <!--<div v-if="obj.phone"><fa i="fa-phone"/><span class="csv" v-for="ph in obj.phone" :key="ph">-->
-    <!--<a :href="'tel:'+ph">{{ph}}</a>-->
-    <!--</span></div>-->
+                            <div v-if="obj.type"><FA i="building"/>{{obj.type}}</div>
+                            <div v-if="obj.phone"><FA i="phone"/><span class="csv" v-for="ph in obj.phone" :key="ph">
+    <a :href="'tel:'+ph">{{ph}}</a>
+    </span></div>
                             <div v-if="obj.email"><i class="gap"></i><span class="csv" v-for="em in obj.email" :key="em">
     <a :href="'mailto:'+em">{{em}}</a>
     </span></div>
