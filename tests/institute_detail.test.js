@@ -2,11 +2,15 @@ import {mount, createLocalVue} from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import CollegeDetail from '../pages/_slug/index.vue'
+import config from '../config.js'
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 // localVue.use(VueRouter);
 const router = new VueRouter();
+
+global.config = config;
+
 
 const $route = {
   params: {'slug': 'khwopa-college'}
@@ -72,15 +76,24 @@ describe('College Detail', () => {
     "images": [
       {
         "name": "ccc",
-        "file": "http://via.placeholder.com/150x150"
+        "url": {
+          "small": "http://via.placeholder.com/150x150",
+          "full": "http://via.placeholder.com/450x450"
+        }
       },
       {
         "name": "bbb",
-        "file": "http://via.placeholder.com/150x150"
+        "url": {
+          "small": "http://via.placeholder.com/150x150",
+          "full": "http://via.placeholder.com/450x450"
+        }
       },
       {
         "name": "aaa",
-        "file": "http://via.placeholder.com/150x150"
+        "url": {
+          "small": "http://via.placeholder.com/150x150",
+          "full": "http://via.placeholder.com/450x450"
+        }
       }
     ],
     "salient_features": "",
@@ -89,7 +102,10 @@ describe('College Detail', () => {
     "network_institutes": [
       {
         "name": "Khwopa PG",
-        "logo": null,
+        "logo": {
+          "small": "http://via.placeholder.com/100x100",
+          "full": "http://via.placeholder.com/450x450"
+        },
         "slug": "khwopa-pg",
         "levels": [
           "Pre-school"
@@ -97,7 +113,10 @@ describe('College Detail', () => {
       },
       {
         "name": "Khwopa School",
-        "logo": null,
+        "logo": {
+          "small": "http://via.placeholder.com/100x100",
+          "full": "http://via.placeholder.com/450x450"
+        },
         "slug": "khwopa-school",
         "levels": [
           "Secondary School",
@@ -131,8 +150,8 @@ describe('College Detail', () => {
     collection: {
       institutes: {objects: {'khwopa-college': data}, pagination: {}, pages: {}, key: 'slug'}
     }
-  }
-  
+  };
+
   beforeEach(() => {
     store = new Vuex.Store({state, actions})
   });
