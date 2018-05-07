@@ -61,4 +61,7 @@
         margin: 0 auto;
         background: #ebe8de;
     }
+    #static-map-wrapper img{
+        cursor: pointer;
+    }
 </style>
