@@ -37,9 +37,9 @@
                     <div class="card">
                         <div class="card-content info">
                             <div v-if="obj.established"><i class="gap"></i>ESTD:<i class="gap"></i>{{obj.established}}</div>
-                            <div v-if="obj.address"><i class="gap"></i>{{obj.address}}</div>
-                            <div v-if="obj.type"><i class="gap"></i>{{obj.type}}</div>
-                            <div v-if="obj.phone"><i class="gap"></i><span class="csv" v-for="ph in obj.phone" :key="ph">
+                            <div v-if="obj.address"><i class="fas fa-location-arrow"></i>{{obj.address}}</div>
+                            <div v-if="obj.type"><i class="fas fa-building"></i>{{obj.type}}</div>
+                            <div v-if="obj.phone"><i class="fas fa-phone"></i><span class="csv" v-for="ph in obj.phone" :key="ph">
     <a :href="'tel:'+ph">{{ph}}</a>
     </span></div>
                             <div v-if="obj.email"><i class="gap"></i><span class="csv" v-for="em in obj.email" :key="em">
