@@ -13,7 +13,13 @@
 }
 
 .VueCarousel-navigation button {
-  padding: 0 !important;
+  //padding: 0 !important;
+  color: #fff !important;
+  font-size: 9rem;
+}
+
+.VueCarousel-navigation--disabled{
+  display: none;
 }
 
 .label {

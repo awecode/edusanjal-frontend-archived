@@ -1,7 +1,9 @@
 import fontawesome from '@fortawesome/fontawesome'
 
-import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow'
-import faBuilding from '@fortawesome/fontawesome-free-solid/faBuilding'
-import faPhone from '@fortawesome/fontawesome-free-solid/faPhone'
+import LocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow'
+import Building from '@fortawesome/fontawesome-free-solid/faBuilding'
+import Phone from '@fortawesome/fontawesome-free-solid/faPhone'
+import AngleLeft from '@fortawesome/fontawesome-free-solid/faAngleLeft'
+import AngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight'
 
-fontawesome.library.add(faLocationArrow, faBuilding, faPhone)
+fontawesome.library.add(LocationArrow, Building, Phone, AngleLeft, AngleRight);

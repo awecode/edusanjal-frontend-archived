@@ -119,9 +119,12 @@
             <h2 class="is-uppercase has-text-centered">Network Institutes</h2>
 
             <div>
+                
+                
                 <no-ssr placeholder="Loading...">
                     <div class="carousel-wrapper network-institutes">
-                        <carousel :navigationEnabled="true">
+                        <carousel :navigationEnabled="true" :navigationPrevLabel="`<i class='fas fa-angle-left'></i>`"
+                        :navigationNextLabel="`<i class='fas fa-angle-right'></i>`">
                             <slide v-for="ins in obj.network_institutes" :key="ins.slug">
                                 <nuxt-link :to="{name: 'slug', params: {slug: ins.slug}}">
                                     <img :data-src="ins.logo.small" height="100" width="100"/>
