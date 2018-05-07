@@ -1,12 +1,12 @@
 import {mount, shallow} from '@vue/test-utils'
 import Header from '../components/Header.vue'
-import NuxtLink from '../.nuxt/components/nuxt-link.js'
+// import NuxtLink from '../.nuxt/components/nuxt-link.js'
 
 
 describe('Hamburger Test', () => {
   
   Header.components = Header.components || {};
-  Header.components.NuxtLink = NuxtLink;
+  Header.components.NuxtLink = {};
   const wrapper = shallow(Header);
   const clickable = wrapper.find('.navbar-burger span:first-child');
 
