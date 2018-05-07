@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <div v-if="isStatic" class="has-text-centered" id="static-map-wrapper">
-            <img :data-src="staticUrl" alt="Map" title="Click to browse" @click="loadDynamic"/>
+    <div class="map-wrapper">
+        <div v-if="isStatic" class="has-text-centered" id="static-map-wrapper" @click="loadDynamic">
+            <img height="640" width="640" :data-src="staticUrl" alt="Map" title="Click to browse"/>
         </div>
         <div v-else class="g-map" id="g-map"></div>
     </div>
@@ -55,17 +55,24 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss">
+    $mapBg: #ebe8de;
+
     .g-map {
         height: 400px;
         margin: 0 auto;
-        background: #ebe8de;
+
     }
-    #static-map-wrapper img{
+
+    #static-map-wrapper {
+        width: 100%;
         cursor: pointer;
-        padding: 0 2rem;
+        img {
+            border: 1px solid #fff;
+        }
     }
-    .map{
-        background: #ebe8de;
+
+    .map-wrapper {
+        background: $mapBg;
     }
 </style>

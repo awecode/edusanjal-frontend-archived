@@ -138,7 +138,7 @@
             </div>
         </div>
 
-        <no-ssr class="map">
+        <no-ssr class="map" v-if="obj.latitude && obj.longitude">
             <GMap :lat="obj.latitude" :lng="obj.longitude"/>
         </no-ssr>
 
