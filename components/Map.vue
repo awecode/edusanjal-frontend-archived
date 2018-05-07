@@ -63,5 +63,9 @@
     }
     #static-map-wrapper img{
         cursor: pointer;
+        padding: 0 2rem;
+    }
+    .map{
+        background: #ebe8de;
     }
 </style>

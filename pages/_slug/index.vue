@@ -116,15 +116,14 @@
 
         <div class="bg-primary p1 mt3">
 
-            <h2 class="is-uppercase has-text-centered">Network Institutes</h2>
 
+            <h2 class="is-uppercase has-text-centered">Network Institutes</h2>
             <div>
-                
-                
                 <no-ssr placeholder="Loading...">
                     <div class="carousel-wrapper network-institutes">
-                        <carousel :navigationEnabled="true" :navigationPrevLabel="`<i class='fas fa-angle-left'></i>`"
-                        :navigationNextLabel="`<i class='fas fa-angle-right'></i>`">
+                        <carousel :navigationEnabled="true" :paginationEnabled="false"
+                                  :navigationPrevLabel="`<i class='fas fa-angle-left'></i>`"
+                                  :navigationNextLabel="`<i class='fas fa-angle-right'></i>`">
                             <slide v-for="ins in obj.network_institutes" :key="ins.slug">
                                 <nuxt-link :to="{name: 'slug', params: {slug: ins.slug}}">
                                     <img :data-src="ins.logo.small" height="100" width="100"/>
@@ -136,12 +135,12 @@
                     </div>
                 </no-ssr>
             </div>
-
-            <no-ssr>
-                <GMap :lat="obj.latitude" :lng="obj.longitude"/>
-            </no-ssr>
-
         </div>
+
+        <no-ssr class="map">
+            <GMap :lat="obj.latitude" :lng="obj.longitude"/>
+        </no-ssr>
+
     </div>
 
 
