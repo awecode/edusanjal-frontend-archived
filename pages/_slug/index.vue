@@ -121,7 +121,8 @@
             <div>
                 <no-ssr placeholder="Loading...">
                     <div class="carousel-wrapper network-institutes">
-                        <carousel :navigationEnabled="true" :paginationEnabled="false" v-on:transitionEnd="lazyNew"
+                        <carousel :navigationEnabled="true" :paginationEnabled="false"
+                                  v-on:transitionEnd="lazyNew" :perPage="5" :autoplay="true"
                                   :navigationPrevLabel="`<i class='fas fa-angle-left'></i>`"
                                   :navigationNextLabel="`<i class='fas fa-angle-right'></i>`">
                             <slide v-for="ins in obj.network_institutes" :key="ins.slug">
