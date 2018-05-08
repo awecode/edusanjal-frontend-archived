@@ -122,7 +122,8 @@
                 <no-ssr placeholder="Loading...">
                     <div class="carousel-wrapper network-institutes">
                         <carousel :navigationEnabled="true" :paginationEnabled="false"
-                                  v-on:transitionEnd="lazyNew" :perPage="5" :autoplay="true"
+                                  :perPageCustom="[[600, 2], [800, 3], [1000, 4], [1300, 5]]"
+                                  v-on:transitionEnd="lazyNew" :perPage="1" :autoplay="true"
                                   :navigationPrevLabel="`<i class='fas fa-angle-left'></i>`"
                                   :navigationNextLabel="`<i class='fas fa-angle-right'></i>`">
                             <slide v-for="ins in obj.network_institutes" :key="ins.slug">
@@ -207,7 +208,7 @@
         smoothScroll(el);
         window.location.hash = tab;
       },
-      lazyNew(){
+      lazyNew() {
         new LazyLoad();
       }
     },
