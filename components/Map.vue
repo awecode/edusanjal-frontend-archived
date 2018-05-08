@@ -10,7 +10,7 @@
 <script>
   export default {
     props: {
-      'lat': {}, 'lng': {}, 'zoom': {default: 14}
+      'lat': {}, 'lng': {}, 'name': {}, 'zoom': {default: 14}
     },
     data() {
       return {
@@ -23,7 +23,12 @@
     computed: {
       staticUrl() {
         return `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=${this.zoom}&maptype=roadmap
-&markers=${this.lat},${this.lng}&key=${this.key}&size=${this.staticWidth}x${this.staticHeight}`;
+&markers=label:${this.initial}%7C${this.lat},${this.lng}&key=${this.key}&size=${this.staticWidth}x${this.staticHeight}`;
+      },
+      initial() {
+        if (this.name) {
+          return this.name[0];
+        }
       }
     },
     mounted() {
@@ -37,8 +42,15 @@
         const map = new google.maps.Map(el, options);
         const marker = new google.maps.Marker({
           position: latLng,
+          label: this.initial
         });
         marker.setMap(map);
+        if (this.name) {
+          let infowindow = new google.maps.InfoWindow({
+            content: this.name
+          });
+          infowindow.open(map, marker);
+        }
       };
 
     },
