@@ -15,6 +15,7 @@
     "test": "jest",
     "test:silent": "jest --silent",
     "test:coverage": "jest --coverage",
+    "deployUAT": "rm -rf dist/*; NODE_ENV=production nuxt generate;ssh esx@45.32.102.100 'rm -rf /home/esx/dist/*';scp -rp dist/* esx@45.32.102.100:/home/esx/dist",
     "cypress": "cypress open"
   },
   "dependencies": {
