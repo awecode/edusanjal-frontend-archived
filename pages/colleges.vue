@@ -1,7 +1,8 @@
 <template>
     <div>
         <ul v-for="obj in objs" :key="obj.slug">
-            {{obj.name}}
+            <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}">{{obj.name}}</nuxt-link>
+
         </ul>
     </div>
 </template>

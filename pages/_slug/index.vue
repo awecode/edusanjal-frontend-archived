@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div v-if="obj">
         <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
         <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
             <div class="container logo-container">
-                <img class="logo" :src="obj.logo" :alt="obj.name"/>
+                <img class="logo" :src="obj.logo.small" :alt="obj.name"/>
             </div>
             <div class="footer">
                 <div class="container">
@@ -25,7 +25,7 @@
                 <li v-if="obj.salient_features"><a @click="activateTab('features')">Features</a></li>
                 <li v-if="obj.admission_guidelines"><a @click="activateTab('admission')">Admission</a></li>
                 <li v-if="obj.scholarship_information"><a @click="activateTab('scholarship')">Scholarship</a></li>
-                <li><a>Contact</a></li>
+                <li v-if="obj.latitude && obj.longitude"><a>Contact</a></li>
             </ul>
         </div>
         <div class="bg-grey">
@@ -45,15 +45,15 @@
                                 <FA i="building"/>
                                 {{obj.type}}
                             </div>
-                            <div v-if="obj.phone">
+                            <div v-if="obj.phone.length">
                                 <FA i="phone"/>
                                 <span class="csv" v-for="ph in obj.phone" :key="ph">
     <a :href="'tel:'+ph">{{ph}}</a>
     </span></div>
-                            <div v-if="obj.email"><i class="gap"></i><span class="csv" v-for="em in obj.email" :key="em">
+                            <div v-if="obj.email.length"><FA i="at"/><span class="csv" v-for="em in obj.email" :key="em">
     <a :href="'mailto:'+em">{{em}}</a>
     </span></div>
-                            <div v-if="obj.website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener"
+                            <div v-if="obj.website"><FA i="globe"/><a target="_blank" rel="noreferrer noopener"
                                                                           :href="obj.website">{{obj.website}}</a>
                             </div>
                         </div>
@@ -242,35 +242,40 @@
 
       // Lightbox
       let imageLinks = document.querySelectorAll('#gallery .grid img');
-      for (let i = 0; i < imageLinks.length; i++) {
-        imageLinks[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          BigPicture({
-            el: e.target,
-            gallery: '#gallery .grid'
+      if (imageLinks) {
+        for (let i = 0; i < imageLinks.length; i++) {
+          imageLinks[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            BigPicture({
+              el: e.target,
+              gallery: '#gallery .grid'
+            })
           })
-        })
-      }
-      // Lazyload images, instantiate Bricks after lazyload complete
-      let counter = 0;
-      let lazyload = new LazyLoad({
-          callback_set: function (a) {
-            if (a.hasAttribute('data-src')) {
-              counter++;
-            }
-            if (counter && counter === imageLinks.length) {
-              // TODO find a way without setTimeout
-              setTimeout(function () {
-                Bricks({
-                  container: '.gallery .grid',
-                  packed: 'packed',
-                  sizes: sizes,
-                }).resize(true).pack();
-              }, 99);
-            }
-          }
         }
-      );
+
+        // Lazyload images, instantiate Bricks after lazyload complete
+        let counter = 0;
+        let lazyload = new LazyLoad({
+            callback_set: function (a) {
+              if (a.hasAttribute('data-src')) {
+                counter++;
+              }
+              if (counter && counter === imageLinks.length) {
+                // TODO find a way without setTimeout
+                setTimeout(function () {
+                  Bricks({
+                    container: '.gallery .grid',
+                    packed: 'packed',
+                    sizes: sizes,
+                  }).resize(true).pack();
+                }, 99);
+              }
+            }
+
+          }
+        );
+
+      }
 
     },
   }
