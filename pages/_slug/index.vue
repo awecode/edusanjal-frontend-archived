@@ -1,7 +1,7 @@
 <template>
     <div v-if="obj">
         <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
-        <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
+        <section class="header" :style="headerStyle">
             <div class="container logo-container">
                 <img class="logo" :src="obj.logo.small" :alt="obj.name"/>
             </div>
@@ -47,14 +47,16 @@
                             </div>
                             <div v-if="obj.phone.length">
                                 <FA i="phone"/>
-                                <span class="csv" v-for="ph in obj.phone" :key="ph">
-    <a :href="'tel:'+ph">{{ph}}</a>
-    </span></div>
-                            <div v-if="obj.email.length"><FA i="at"/><span class="csv" v-for="em in obj.email" :key="em">
-    <a :href="'mailto:'+em">{{em}}</a>
-    </span></div>
-                            <div v-if="obj.website"><FA i="globe"/><a target="_blank" rel="noreferrer noopener"
-                                                                          :href="obj.website">{{obj.website}}</a>
+                                <span class="csv" v-for="ph in obj.phone" :key="ph"><a :href="'tel:'+ph">{{ph}}</a></span>
+                            </div>
+                            <div v-if="obj.email.length">
+                                <FA i="at"/>
+                                <span class="csv" v-for="em in obj.email" :key="em"><a :href="'mailto:'+em">{{em}}</a></span>
+                            </div>
+                            <div v-if="obj.website">
+                                <FA i="globe"/>
+                                <a target="_blank" rel="noreferrer noopener"
+                                   :href="obj.website">{{obj.website}}</a>
                             </div>
                         </div>
                     </div>
@@ -181,6 +183,13 @@
       }
     },
     computed: {
+      headerStyle() {
+        if (this.obj && this.obj.cover_image) {
+          return {background: 'url(' + this.obj.cover_image + ')'};
+        } else {
+          return {};
+        }
+      },
       obj() {
         return this.$store.state.collection[this.$options.collection].objects[this.$route.params[this.$options.key]];
       },
@@ -242,6 +251,23 @@
 
       // Lightbox
       let imageLinks = document.querySelectorAll('#gallery .grid img');
+
+      if ("onpagehidess" in window) {
+        window.addEventListener("pageshow", function () {
+          console.log('show')
+        }, false);
+        window.addEventListener("pagehide", function () {
+          console.log('hide')
+        }, false);
+      } else {
+        window.addEventListener("load", function () {
+          console.log('load')
+        }, false);
+        window.addEventListener("unload", function () {
+          console.log('unload')
+        }, false);
+      }
+
       if (imageLinks) {
         for (let i = 0; i < imageLinks.length; i++) {
           imageLinks[i].addEventListener('click', function (e) {
