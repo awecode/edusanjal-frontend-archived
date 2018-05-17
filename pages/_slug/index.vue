@@ -118,7 +118,6 @@
 
         <div class="bg-primary p1 mt3">
 
-
             <h2 class="is-uppercase has-text-centered">Network Institutes</h2>
             <div>
                 <no-ssr placeholder="Loading...">
@@ -231,7 +230,8 @@
       if (this.$route.hash) {
         this.activateTab(this.$route.hash.replace('#', ''));
       }
-
+    },
+    updated() {
       // Computation of brick size by screen size
       // padding(left+right) = 20px; gutter=10px; width_per_column = 300px
       // formula: 20 + width_per_column * no_of_columns + (no_of_columns - 1) *gutter
@@ -252,21 +252,6 @@
       // Lightbox
       let imageLinks = document.querySelectorAll('#gallery .grid img');
 
-      if ("onpagehidess" in window) {
-        window.addEventListener("pageshow", function () {
-          console.log('show')
-        }, false);
-        window.addEventListener("pagehide", function () {
-          console.log('hide')
-        }, false);
-      } else {
-        window.addEventListener("load", function () {
-          console.log('load')
-        }, false);
-        window.addEventListener("unload", function () {
-          console.log('unload')
-        }, false);
-      }
 
       if (imageLinks) {
         for (let i = 0; i < imageLinks.length; i++) {
@@ -302,7 +287,6 @@
         );
 
       }
-
     },
   }
 </script>
