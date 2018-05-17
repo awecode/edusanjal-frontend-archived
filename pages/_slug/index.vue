@@ -20,8 +20,8 @@
         <div class="tabs institute-tabs">
             <ul class="container">
                 <li class="is-active"><a>About</a></li>
-                <li v-if="obj.images.length"><a href="#gallery">Gallery</a></li>
-                <li v-if="obj.programs.length"><a @click="activateTab('programs')">Programs</a></li>
+                <li v-if="obj.images && obj.images.length"><a href="#gallery">Gallery</a></li>
+                <li v-if="obj.programs && obj.programs.length"><a @click="activateTab('programs')">Programs</a></li>
                 <li v-if="obj.salient_features"><a @click="activateTab('features')">Features</a></li>
                 <li v-if="obj.admission_guidelines"><a @click="activateTab('admission')">Admission</a></li>
                 <li v-if="obj.scholarship_information"><a @click="activateTab('scholarship')">Scholarship</a></li>
@@ -45,11 +45,11 @@
                                 <FA i="building"/>
                                 {{obj.type}}
                             </div>
-                            <div v-if="obj.phone.length">
+                            <div v-if="obj.phone && obj.phone.length">
                                 <FA i="phone"/>
                                 <span class="csv" v-for="ph in obj.phone" :key="ph"><a :href="'tel:'+ph">{{ph}}</a></span>
                             </div>
-                            <div v-if="obj.email.length">
+                            <div v-if="obj.email && obj.email.length">
                                 <FA i="at"/>
                                 <span class="csv" v-for="em in obj.email" :key="em"><a :href="'mailto:'+em">{{em}}</a></span>
                             </div>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div id="gallery" class="gallery" v-if="obj.images.length">
+            <div id="gallery" class="gallery" v-if="obj.images && obj.images.length">
                 <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
                 <div class="bg-primary has-text-centered">
                     <div class="grid">
@@ -194,10 +194,12 @@
       },
       levels() {
         let dct = {};
-        this.obj.programs.forEach(function (program) {
-          dct[program.level] = dct[program.level] || [];
-          dct[program.level].push(program)
-        });
+        if (this.obj.programs && this.obj.programs.length) {
+          this.obj.programs.forEach(function (program) {
+            dct[program.level] = dct[program.level] || [];
+            dct[program.level].push(program)
+          });
+        }
         return dct;
       }
     },
