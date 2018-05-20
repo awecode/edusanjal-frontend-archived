@@ -38,7 +38,9 @@ export const mutations = {
     collection.pagination['count'] = data.pagination.count;
     collection.pagination['pages'] = data.pagination.pages;
     let page_array = Object.entries(data.pages)[0];
-    collection.pages[page_array[0]] = page_array[1];
+    if (page_array) {
+      collection.pages[page_array[0]] = page_array[1];
+    }
     //  TODO remove from other pages? page_array[1]
     Object.assign(collection.objects, data.objects);
   },

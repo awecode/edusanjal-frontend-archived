@@ -5,5 +5,7 @@ import Building from '@fortawesome/fontawesome-free-solid/faBuilding'
 import Phone from '@fortawesome/fontawesome-free-solid/faPhone'
 import AngleLeft from '@fortawesome/fontawesome-free-solid/faAngleLeft'
 import AngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight'
+import At from '@fortawesome/fontawesome-free-solid/faAt'
+import Globe from '@fortawesome/fontawesome-free-solid/faGlobe'
 
-fontawesome.library.add(LocationArrow, Building, Phone, AngleLeft, AngleRight);
+fontawesome.library.add(LocationArrow, Building, Phone, AngleLeft, AngleRight, At, Globe);

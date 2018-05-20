@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div v-if="obj">
         <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
-        <section class="header" :style="{background: 'url('+obj.cover_image+')'}">
+        <section class="header" :style="headerStyle">
             <div class="container logo-container">
-                <img class="logo" :src="obj.logo" :alt="obj.name"/>
+                <img class="logo" :src="obj.logo.small" :alt="obj.name"/>
             </div>
             <div class="footer">
                 <div class="container">
@@ -20,12 +20,12 @@
         <div class="tabs institute-tabs">
             <ul class="container">
                 <li class="is-active"><a>About</a></li>
-                <li v-if="obj.images.length"><a href="#gallery">Gallery</a></li>
-                <li v-if="obj.programs.length"><a @click="activateTab('programs')">Programs</a></li>
+                <li v-if="obj.images && obj.images.length"><a href="#gallery">Gallery</a></li>
+                <li v-if="obj.programs && obj.programs.length"><a @click="activateTab('programs')">Programs</a></li>
                 <li v-if="obj.salient_features"><a @click="activateTab('features')">Features</a></li>
                 <li v-if="obj.admission_guidelines"><a @click="activateTab('admission')">Admission</a></li>
                 <li v-if="obj.scholarship_information"><a @click="activateTab('scholarship')">Scholarship</a></li>
-                <li><a>Contact</a></li>
+                <li v-if="obj.latitude && obj.longitude"><a>Contact</a></li>
             </ul>
         </div>
         <div class="bg-grey">
@@ -45,22 +45,24 @@
                                 <FA i="building"/>
                                 {{obj.type}}
                             </div>
-                            <div v-if="obj.phone">
+                            <div v-if="obj.phone && obj.phone.length">
                                 <FA i="phone"/>
-                                <span class="csv" v-for="ph in obj.phone" :key="ph">
-    <a :href="'tel:'+ph">{{ph}}</a>
-    </span></div>
-                            <div v-if="obj.email"><i class="gap"></i><span class="csv" v-for="em in obj.email" :key="em">
-    <a :href="'mailto:'+em">{{em}}</a>
-    </span></div>
-                            <div v-if="obj.website"><i class="gap"></i><a target="_blank" rel="noreferrer noopener"
-                                                                          :href="obj.website">{{obj.website}}</a>
+                                <span class="csv" v-for="ph in obj.phone" :key="ph"><a :href="'tel:'+ph">{{ph}}</a></span>
+                            </div>
+                            <div v-if="obj.email && obj.email.length">
+                                <FA i="at"/>
+                                <span class="csv" v-for="em in obj.email" :key="em"><a :href="'mailto:'+em">{{em}}</a></span>
+                            </div>
+                            <div v-if="obj.website">
+                                <FA i="globe"/>
+                                <a target="_blank" rel="noreferrer noopener"
+                                   :href="obj.website">{{obj.website}}</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="gallery" class="gallery" v-if="obj.images.length">
+            <div id="gallery" class="gallery" v-if="obj.images && obj.images.length">
                 <h2 class="is-uppercase has-text-centered mt3">Gallery</h2>
                 <div class="bg-primary has-text-centered">
                     <div class="grid">
@@ -115,7 +117,6 @@
         </div>
 
         <div class="bg-primary p1 mt3">
-
 
             <h2 class="is-uppercase has-text-centered">Network Institutes</h2>
             <div>
@@ -181,15 +182,24 @@
       }
     },
     computed: {
+      headerStyle() {
+        if (this.obj && this.obj.cover_image) {
+          return {background: 'url(' + this.obj.cover_image + ')'};
+        } else {
+          return {};
+        }
+      },
       obj() {
         return this.$store.state.collection[this.$options.collection].objects[this.$route.params[this.$options.key]];
       },
       levels() {
         let dct = {};
-        this.obj.programs.forEach(function (program) {
-          dct[program.level] = dct[program.level] || [];
-          dct[program.level].push(program)
-        });
+        if (this.obj.programs && this.obj.programs.length) {
+          this.obj.programs.forEach(function (program) {
+            dct[program.level] = dct[program.level] || [];
+            dct[program.level].push(program)
+          });
+        }
         return dct;
       }
     },
@@ -222,7 +232,8 @@
       if (this.$route.hash) {
         this.activateTab(this.$route.hash.replace('#', ''));
       }
-
+    },
+    updated() {
       // Computation of brick size by screen size
       // padding(left+right) = 20px; gutter=10px; width_per_column = 300px
       // formula: 20 + width_per_column * no_of_columns + (no_of_columns - 1) *gutter
@@ -242,36 +253,42 @@
 
       // Lightbox
       let imageLinks = document.querySelectorAll('#gallery .grid img');
-      for (let i = 0; i < imageLinks.length; i++) {
-        imageLinks[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          BigPicture({
-            el: e.target,
-            gallery: '#gallery .grid'
-          })
-        })
-      }
-      // Lazyload images, instantiate Bricks after lazyload complete
-      let counter = 0;
-      let lazyload = new LazyLoad({
-          callback_set: function (a) {
-            if (a.hasAttribute('data-src')) {
-              counter++;
-            }
-            if (counter && counter === imageLinks.length) {
-              // TODO find a way without setTimeout
-              setTimeout(function () {
-                Bricks({
-                  container: '.gallery .grid',
-                  packed: 'packed',
-                  sizes: sizes,
-                }).resize(true).pack();
-              }, 99);
-            }
-          }
-        }
-      );
 
+
+      if (imageLinks) {
+        for (let i = 0; i < imageLinks.length; i++) {
+          imageLinks[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            BigPicture({
+              el: e.target,
+              gallery: '#gallery .grid'
+            })
+          })
+        }
+
+        // Lazyload images, instantiate Bricks after lazyload complete
+        let counter = 0;
+        let lazyload = new LazyLoad({
+            callback_set: function (a) {
+              if (a.hasAttribute('data-src')) {
+                counter++;
+              }
+              if (counter && counter === imageLinks.length) {
+                // TODO find a way without setTimeout
+                setTimeout(function () {
+                  Bricks({
+                    container: '.gallery .grid',
+                    packed: 'packed',
+                    sizes: sizes,
+                  }).resize(true).pack();
+                }, 99);
+              }
+            }
+
+          }
+        );
+
+      }
     },
   }
 </script>
