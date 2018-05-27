@@ -3,7 +3,7 @@
         <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
         <section class="header" :style="headerStyle">
             <div class="container logo-container">
-                <img class="logo" :src="obj.logo.small" :alt="obj.name"/>
+                <img class="logo" :src="obj.logo_set.small" :alt="obj.name"/>
             </div>
             <div class="footer">
                 <div class="container">
@@ -129,7 +129,7 @@
                                   :navigationNextLabel="`<i class='fas fa-angle-right'></i>`">
                             <slide v-for="ins in obj.network_institutes" :key="ins.slug">
                                 <nuxt-link :to="{name: 'slug', params: {slug: ins.slug}}">
-                                    <img :data-src="ins.logo.small" height="100" width="100"/>
+                                    <img :data-src="ins.logo_set.small" height="100" width="100"/>
                                 </nuxt-link>
 
                                 <nuxt-link :to="{name: 'slug', params: {slug: ins.slug}}">{{ins.name}}</nuxt-link>

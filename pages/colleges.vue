@@ -2,7 +2,7 @@
     <div>
         <ul v-for="obj in objs" :key="obj.slug">
             <div class="card-content info">
-                <img :src="obj.logo.small" :alt="obj.name" :title="obj.name"/>
+                <img :src="obj.logo_set.small" :alt="obj.name" :title="obj.name"/>
                 <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}">{{obj.name}}</nuxt-link>
             </div>
 
