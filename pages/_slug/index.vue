@@ -1,7 +1,7 @@
 <template>
     <div v-if="obj">
         <img class="cover is-hidden-tablet" :src="obj.cover_image" alt="obj.name"/>
-        <section class="header" :style="headerStyle">
+        <section :class="'header '+headerClass" :style="headerStyle">
             <div class="container logo-container">
                 <img class="logo" :src="obj.logo_set.small" :alt="obj.name"/>
             </div>
@@ -145,8 +145,6 @@
         </no-ssr>
 
     </div>
-
-
 </template>
 
 <script>
@@ -187,6 +185,13 @@
           return {background: 'url(' + this.obj.cover_image + ')'};
         } else {
           return {};
+        }
+      },
+      headerClass() {
+        if (this.obj && this.obj.cover_image) {
+          return 'with-image';
+        } else {
+          return 'no-image'
         }
       },
       obj() {
@@ -304,6 +309,11 @@
         justify-content: flex-end;
         color: #fff;
         background-position: center !important;
+        transition: min-height 1s, background 1s, flex-direction 1s;
+
+        .logo-container {
+            transition: width 1s, margin 1s;
+        }
 
         .footer {
             background: rgba($primary, .6);
@@ -318,6 +328,19 @@
 
         strong {
             padding-right: 2rem;
+        }
+
+        &.no-image {
+            min-height: 125px;
+            align-items: center;
+            background: lighten($primary, 5);
+            flex-direction: row;
+            justify-content: flex-start;
+
+            .logo-container {
+                width: auto;
+                margin: 1rem;
+            }
         }
 
     }

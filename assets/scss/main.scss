@@ -1,5 +1,4 @@
 @import 'variables';
-
 //@import '~bulma';
 @import "~bulma/sass/utilities/all";
 @import "~bulma/sass/base/all";
@@ -7,9 +6,7 @@
 @import "~bulma/sass/components/tabs";
 @import "~bulma/sass/components/card";
 @import "~bulma/sass/grid/columns";
-
 //@import 'mixins';
-
 @import 'carousel';
 
 .navbar-brand .navbar-item {
@@ -37,6 +34,9 @@ footer {
 .logo {
   max-height: 100px;
   max-width: 100px;
+  background: #fff;
+  padding: 0.2rem;
+
 }
 
 .container {
@@ -61,12 +61,11 @@ strong {
   margin: 2rem 0;
 }
 
-
 .pt2 {
   padding-top: 2rem;
 }
 
-.p1{
+.p1 {
   padding: 1rem;
 }
 
@@ -83,7 +82,7 @@ h2 {
 .bg-primary {
   background: $primary;
   color: #fff;
-  a{
+  a {
     color: #fff;
   }
 }
