@@ -76,12 +76,14 @@
             </div>
         </div>
 
-        <h2 class="is-uppercase has-text-centered mt3">More Information</h2>
 
-        <div class="more-info container">
+        <div v-if="(obj.programs && obj.programs.length) || obj.salient_features || obj.admission_guidelines || obj.scholarship_information"
+             class="more-info container">
+            <h2 class="is-uppercase has-text-centered mt3">More Information</h2>
             <div class="tabs info-tabs is-toggle is-large is-fullwidth">
                 <ul>
-                    <li :class="{'is-active': activeTab == 'programs'}" @click="activateTab('programs')">
+                    <li v-if="obj.programs && obj.programs.length" :class="{'is-active': activeTab == 'programs'}"
+                        @click="activateTab('programs')">
                         <a>Offered Programs</a></li>
                     <li v-if="obj.salient_features" :class="{'is-active': activeTab == 'features'}"
                         @click="activateTab('features')"><a>Salient Features</a></li>
@@ -375,6 +377,7 @@
             img {
                 box-sizing: content-box;
                 border: 50px solid #fff;
+                background: #fff;
                 border-top: 0;
                 border-bottom: 0;
             }
