@@ -1,36 +1,48 @@
 <template>
     <div class="bg-grey p1">
-        <ul v-for="obj in objs" :key="obj.slug">
-            <div class="card mt1 mh1">
-                <div class="card-content info list-item">
-                    <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}" class="list-image">
-                        <img :src="obj.logo_set.small" :alt="obj.name" :title="obj.name"/>
-                    </nuxt-link>
-                    <div class="list-detail">
-                        <div>
-                            <h3>
-                                <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}">{{obj.name}}</nuxt-link>
-                            </h3>
-                            <div v-if="obj.address">
-                                <FA i="location-arrow"/>
-                                {{obj.address}}
-                            </div>
-                            <div v-if="obj.type">
-                                <FA i="building"/>
-                                {{obj.type}}
-                            </div>
-                            <div class="boards" v-if="obj.boards && obj.boards.length">
-                                <FA i="university"/>
-                                <div class="csv">
-                                    <div v-for="board in obj.boards" :key="board.slug">{{board.name}}</div>
-                                </div>
+
+        <div class="card mt1 mh1" v-for="obj in objs" :key="obj.slug">
+            <div class="card-content info list-item">
+                <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}" class="list-image">
+                    <img :src="obj.logo_set.small" :alt="obj.name" :title="obj.name"/>
+                </nuxt-link>
+                <div class="list-detail">
+                    <div>
+                        <h3>
+                            <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}">{{obj.name}}</nuxt-link>
+                        </h3>
+                        <div v-if="obj.address">
+                            <FA i="location-arrow"/>
+                            {{obj.address}}
+                        </div>
+                        <div v-if="obj.type">
+                            <FA i="building"/>
+                            {{obj.type}}
+                        </div>
+                        <div class="boards" v-if="obj.boards && obj.boards.length">
+                            <FA i="university"/>
+                            <div class="csv">
+                                <div v-for="board in obj.boards" :key="board.slug">{{board.name}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </ul>
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            <a class="pagination-previous">Previous</a>
+            <a class="pagination-next">Next</a>
+            <ul class="pagination-list">
+                <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
+                <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a></li>
+                <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+            </ul>
+        </nav>
     </div>
 </template>
 
