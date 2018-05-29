@@ -54,6 +54,14 @@ strong {
   font-weight: bold;
 }
 
+.mt1 {
+  margin-top: 1rem !important;
+}
+
+.mh1 {
+  margin: 0 1rem;
+}
+
 .mt3 {
   margin-top: 3rem;
 }
@@ -132,4 +140,33 @@ i.gap:before {
   a:hover {
     background-color: $tabs-toggle-link-active-background-color;
   }
+}
+
+.list-item {
+  display: flex;
+
+  .list-detail {
+    margin-left: 2rem;
+  }
+}
+
+.csv {
+  display: inline-block;
+  > * {
+    margin-left: .3rem;
+    display: inline-block;
+  }
+  > *:first-child {
+    margin-left: 0;
+  }
+  > *:after {
+    content: ',';
+  }
+  > *:last-child:after {
+    content: '';
+  }
+}
+
+h3 {
+  font-size: 1.6rem;
 }
