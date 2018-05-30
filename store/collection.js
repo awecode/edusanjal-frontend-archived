@@ -10,6 +10,9 @@ export const getters = {
     } else {
       return [];
     }
+  },
+  get_pagination: (state) => (collection_name) => {
+    return state[collection_name].pagination;
   }
 };
 
@@ -22,8 +25,7 @@ export const mutations = {
   },
   update_list(state, [collection_name, data, key_name, page]) {
     let collection = state[collection_name];
-    collection.pagination['count'] = data.count;
-    collection.pagination['pages'] = data.pages;
+    collection.pagination = data.pagination;
     let page_list = collection.pages[page + ''] = [];
     for (let item of data.results) {
       let key = item[key_name];
@@ -35,8 +37,7 @@ export const mutations = {
   },
   update_list_ssr(state, [collection_name, data, key_name, page]) {
     let collection = state[collection_name];
-    collection.pagination['count'] = data.pagination.count;
-    collection.pagination['pages'] = data.pagination.pages;
+    collection.pagination = data.pagination;
     let page_array = Object.entries(data.pages)[0];
     if (page_array) {
       collection.pages[page_array[0]] = page_array[1];

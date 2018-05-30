@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <Pagination/>
+        <Pagination :pagination="pagination" @paginate="paginate"/>
 
     </div>
 </template>
@@ -59,6 +59,14 @@
       objs() {
         return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.$options.page);
       },
+      pagination() {
+        return this.$store.getters['collection/get_pagination'](this.$options.collection);
+      },
+    },
+    methods: {
+      paginate(page) {
+        console.log(page);
+      }
     },
     async mounted() {
       if (this.$options.remote) {
