@@ -117,7 +117,10 @@
         });
       },
       filter(obj) {
+        // reset page count on filter
         this.$options.filters = obj;
+        this.$options.page = 1;
+        this.page = 1;
         this.$options.get_list(this.$store).then(() => {
           this.filters = obj;
         });
