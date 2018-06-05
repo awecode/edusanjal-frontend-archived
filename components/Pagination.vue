@@ -6,7 +6,7 @@
             <li v-for="pg in page_links" :key="pg" :class="{active: pg==pagination.page}">
                 <span class="pagination-ellipsis" v-if="isNaN(pg)">{{pg}}</span>
                 <a v-else :class="{'pagination-link': 1, 'is-current': pg==pagination.page}" @click="paginate(pg)"
-                   :aria-label="'Go to page ' + pg">{{pg}}</a>
+                   :aria-label="'Go to page ' + pg" :title="'Page '+pg">{{pg}}</a>
             </li>
         </ul>
     </nav>
@@ -19,6 +19,12 @@
       page_links() {
         let c = this.pagination.page;
         let m = this.pagination.pages;
+        if (m === 0) {
+          return [];
+        }
+        if (m === 1) {
+          return [1];
+        }
         let delta = 2,
           range = [],
           rangeWithDots = [],

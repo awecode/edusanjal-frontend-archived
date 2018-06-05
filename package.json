@@ -26,6 +26,7 @@
     "bricks.js": "^1.8.0",
     "bulma": "^0.6.2",
     "nuxt": "^1.4.0",
+    "query-string": "5",
     "smooth-scroll": "^12.1.5",
     "vanilla-lazyload": "^8.7.1",
     "vue-carousel": "^0.7.3",

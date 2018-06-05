@@ -3,12 +3,7 @@ export const state = () => ({
 });
 
 export const getters = {
-  get_items_for_page: (state) => (collection_name, page, filters) => {
-    if (filters && Object.keys(filters).length) {
-      // Do not save filtered data in state, return directly
-      console.log(filters);
-      return [];
-    }
+  get_items_for_page: (state) => (collection_name, page) => {
     let keys = state[collection_name].pages[page + ''];
     if (keys) {
       return Object.entries(state[collection_name].objects).filter(o => keys.includes(o[0])).map(o => o[1]);
@@ -71,5 +66,5 @@ export const actions = {
   async update_item_from_ssr({commit}, [collection_name, key]) {
     let data = window.__NUXT__.state.collection[collection_name].objects[key];
     commit('update_item', [collection_name, key, data]);
-  }
+  },
 };

@@ -54,7 +54,11 @@
     key: 'slug',
     filters: {},
     async get_list(store) {
-      await store.dispatch('collection/get_list', [this.collection, this.key, this.page]);
+      if (this.filters && Object.keys(this.filters).length) {
+        await store.dispatch('filter/get_data', [this.collection, this.filters, this.page]);
+      } else {
+        await store.dispatch('collection/get_list', [this.collection, this.key, this.page]);
+      }
     },
     async fetch({store, query}) {// fetch isn't called on client side if already called on server side
 
@@ -87,11 +91,22 @@
       }
     },
     computed: {
+      hasFilters() {
+        return this.filters && Object.keys(this.filters).length;
+      },
       objs() {
-        return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.page, this.filters);
+        if (this.hasFilters) {
+          return this.$store.getters['filter/get_items'](this.$options.collection, this.page);
+        } else {
+          return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.page);
+        }
       },
       pagination() {
-        return this.$store.getters['collection/get_pagination'](this.$options.collection);
+        if (this.hasFilters) {
+          return this.$store.getters['filter/get_pagination'](this.$options.collection);
+        } else {
+          return this.$store.getters['collection/get_pagination'](this.$options.collection);
+        }
       },
     },
     methods: {
@@ -102,7 +117,10 @@
         });
       },
       filter(obj) {
-        this.filters = obj;
+        this.$options.filters = obj;
+        this.$options.get_list(this.$store).then(() => {
+          this.filters = obj;
+        });
       }
     },
     async mounted() { // called on client side only
