@@ -6,7 +6,7 @@ export const getters = {
   get_items_for_page: (state) => (collection_name, page) => {
     let keys = state[collection_name].pages[page + ''];
     if (keys) {
-      return Object.entries(state[collection_name].objects).filter(o => keys.includes(o[0])).map(o => o[1])
+      return Object.entries(state[collection_name].objects).filter(o => keys.includes(o[0])).map(o => o[1]);
     } else {
       return [];
     }

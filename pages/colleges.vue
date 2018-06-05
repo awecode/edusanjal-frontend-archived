@@ -95,7 +95,10 @@
     },
     methods: {
       paginate(page) {
-        this.page = page;
+        this.$options.page = page;
+        this.$options.get_list(this.$store).then(() => {
+          this.page = page;
+        });
       },
       filter(obj) {
         this.$options.filters = obj;
@@ -104,8 +107,9 @@
     watch: {
       // sync page option with page data
       page: function (num) {
-        this.$options.page = num;
-        this.$options.get_list(this.$store);
+        console.log('p');
+//        this.$options.page = num;
+//        this.$options.get_list(this.$store);
       }
     },
     async mounted() { // called on client side only
