@@ -39,7 +39,9 @@
           }
         });
         let out_data = {};
-        out_data[this.filter.param] = fields;
+        if (fields.length) {
+          out_data[this.filter.param] = fields;
+        }
         this.$emit('filter', out_data);
       }
     },

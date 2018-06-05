@@ -2,7 +2,7 @@
     <div class="bg-grey p1">
         <div class="container columns">
             <div class="column is-one-third">
-                <FilterCard :filter="filters.type" @filter="filter"/>
+                <FilterCard :filter="filterSet.type" @filter="filter"/>
             </div>
             <div class="column is-two-thirds">
                 <div class="card mt1 mh1" v-for="obj in objs" :key="obj.slug">
@@ -74,7 +74,8 @@
     data() {
       return {
         'page': 1,
-        'filters': {
+        'filters': {},
+        'filterSet': {
           'type': {
             'name': 'Type',
             'param': 'type',
@@ -87,7 +88,7 @@
     },
     computed: {
       objs() {
-        return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.page);
+        return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.page, this.filters);
       },
       pagination() {
         return this.$store.getters['collection/get_pagination'](this.$options.collection);
@@ -101,15 +102,7 @@
         });
       },
       filter(obj) {
-        this.$options.filters = obj;
-      }
-    },
-    watch: {
-      // sync page option with page data
-      page: function (num) {
-        console.log('p');
-//        this.$options.page = num;
-//        this.$options.get_list(this.$store);
+        this.filters = obj;
       }
     },
     async mounted() { // called on client side only

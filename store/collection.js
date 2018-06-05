@@ -3,7 +3,12 @@ export const state = () => ({
 });
 
 export const getters = {
-  get_items_for_page: (state) => (collection_name, page) => {
+  get_items_for_page: (state) => (collection_name, page, filters) => {
+    if (filters && Object.keys(filters).length) {
+      // Do not save filtered data in state, return directly
+      console.log(filters);
+      return [];
+    }
     let keys = state[collection_name].pages[page + ''];
     if (keys) {
       return Object.entries(state[collection_name].objects).filter(o => keys.includes(o[0])).map(o => o[1]);
@@ -25,7 +30,6 @@ export const mutations = {
   },
   update_list(state, [collection_name, data, key_name, page]) {
     let collection = state[collection_name];
-    console.log(data.pagination);
     collection.pagination = data.pagination;
     let page_list = collection.pages[page + ''] = [];
     for (let item of data.results) {
