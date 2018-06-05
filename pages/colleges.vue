@@ -96,7 +96,7 @@
       },
       objs() {
         if (this.hasFilters) {
-          return this.$store.getters['filter/get_items'](this.$options.collection, this.page);
+          return this.$store.getters['filter/get_items'](this.$options.collection);
         } else {
           return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.page);
         }
