@@ -46,7 +46,7 @@
   import FilterCard from '~/components/FilterCard.vue';
 
   export default {
-    local: true,
+    remote: true,
     ssr: false,
     page: 1,
     components: {Verified, Pagination, FilterCard},
@@ -71,7 +71,8 @@
       // if not in local storage, fetch
       if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
         await this.get_list(store);
-        this.local = false;
+      } else {
+        this.remote = false;
       }
 
     },
@@ -128,14 +129,18 @@
     },
     async mounted() { // called on client side only
 
+      let query = this.$route.query;
+      if (query.page) {
+        this.$options.page = query.page;
+      }
+
       // Update page data from page option
       this.page = this.$options.page;
 
-      // if data is from local storage, try fetching from api
-      if (this.$options.local) {
-        await this.$store.dispatch('collection/get_list', [this.$options.collection, this.$options.key, this.$options.page]);
-      } else if (this.$options.ssr) { // if fetched via API on SSR, update localStorage
+      if (this.$options.remote) {
         await this.$store.dispatch('collection/update_list_from_ssr', [this.$options.collection, this.$route.params[this.$options.key], this.$options.page]);
+      } else {
+        await this.$options.get_list(this.$store);
       }
     },
   }
