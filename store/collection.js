@@ -25,6 +25,7 @@ export const mutations = {
   },
   update_list(state, [collection_name, data, key_name, page]) {
     let collection = state[collection_name];
+    console.log(data.pagination);
     collection.pagination = data.pagination;
     let page_list = collection.pages[page + ''] = [];
     for (let item of data.results) {

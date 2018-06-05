@@ -46,27 +46,34 @@
   import FilterCard from '~/components/FilterCard.vue';
 
   export default {
-    remote: true,
+    local: true,
+    ssr: false,
     page: 1,
     components: {Verified, Pagination, FilterCard},
     collection: 'institutes',
     key: 'slug',
+    filters: {},
     async get_list(store) {
       await store.dispatch('collection/get_list', [this.collection, this.key, this.page]);
     },
-    async fetch({store, query}) {
+    async fetch({store, query}) {// fetch isn't called on client side if already called on server side
+
+      this.ssr = process.browser;
+
       if (query.page) {
         this.page = query.page;
       }
+
+      // if not in local storage, fetch
       if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
-//        this.get_list(store);
-        await store.dispatch('collection/get_list', [this.collection, this.key, this.page]);
-      } else {
-        this.remote = false;
+        await this.get_list(store);
+        this.local = false;
       }
+
     },
     data() {
       return {
+        'page': 1,
         'filters': {
           'type': {
             'name': 'Type',
@@ -80,7 +87,7 @@
     },
     computed: {
       objs() {
-        return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.$options.page);
+        return this.$store.getters['collection/get_items_for_page'](this.$options.collection, this.page);
       },
       pagination() {
         return this.$store.getters['collection/get_pagination'](this.$options.collection);
@@ -88,18 +95,29 @@
     },
     methods: {
       paginate(page) {
-        this.$options.page = page;
-        this.$options.get_list(this.$store);
+        this.page = page;
       },
       filter(obj) {
-        console.log(obj);
+        this.$options.filters = obj;
       }
     },
-    async mounted() {
-      if (this.$options.remote) {
-        await this.$store.dispatch('collection/update_list_from_ssr', [this.$options.collection, this.$route.params[this.$options.key], this.$options.page]);
-      } else {
+    watch: {
+      // sync page option with page data
+      page: function (num) {
+        this.$options.page = num;
+        this.$options.get_list(this.$store);
+      }
+    },
+    async mounted() { // called on client side only
+
+      // Update page data from page option
+      this.page = this.$options.page;
+
+      // if data is from local storage, try fetching from api
+      if (this.$options.local) {
         await this.$store.dispatch('collection/get_list', [this.$options.collection, this.$options.key, this.$options.page]);
+      } else if (this.$options.ssr) { // if fetched via API on SSR, update localStorage
+        await this.$store.dispatch('collection/update_list_from_ssr', [this.$options.collection, this.$route.params[this.$options.key], this.$options.page]);
       }
     },
   }
