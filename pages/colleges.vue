@@ -113,18 +113,12 @@
         }
         let query = Utils.clone(this.$route.query);
         query[key] = value;
-        console.log(query);
         this.$router.push({query: query});
       },
       paginate(page) {
         // Unset page query for page 1
         page = (page === 1) ? undefined : page;
         this.updateQuery('page', page);
-//        this.$options.page = page;
-//        this.$options.get_list(this.$store).then(() => {
-//          this.page = page;
-//          this.updateQuery('page', page);
-//        });
       },
       filter(obj) {
         let key = Object.keys(obj)[0];
@@ -139,6 +133,23 @@
 //        this.$options.get_list(this.$store).then(() => {
 //          this.filters = obj;
 //        });
+      }
+    },
+    watch: {
+      '$route.query': function (n, o) {
+        console.log(n);
+        console.log(o);
+        // TODO handle cached
+        // TODO Check for page number change
+        if (n.page !== o.page) {
+          const page = (n.page === undefined) ? 1 :n.page;
+          this.$options.page = page;
+          this.page = page;
+          this.$options.get_list(this.$store).then(() => {
+          });
+        }
+        // TODO Check filter change
+        // TODO Check valid filters
       }
     },
     beforeMount() {
