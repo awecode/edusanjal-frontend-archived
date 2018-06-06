@@ -11,8 +11,12 @@ export const getters = {
       return [];
     }
   },
-  get_pagination: (state) => (collection_name) => {
-    return state[collection_name].pagination;
+  get_pagination: (state) => (collection_name, page) => {
+    let pagination_data = Utils.clone(state[collection_name].pagination);
+    // update pagination data with current page number
+    pagination_data.page = page;
+    return pagination_data;
+
   }
 };
 

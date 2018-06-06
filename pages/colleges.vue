@@ -47,7 +47,6 @@
 
   export default {
     remote: true,
-    ssr: false,
     page: 1,
     components: {Verified, Pagination, FilterCard},
     collection: 'institutes',
@@ -62,10 +61,8 @@
     },
     async fetch({store, query}) {// fetch isn't called on client side if already called on server side
 
-      this.ssr = process.browser;
-
-      if (query.page) {
-        this.page = query.page;
+      if (Utils.isInteger(query.page)) {
+        this.page = parseInt(query.page);
       }
 
       // if not in local storage, fetch
@@ -78,7 +75,7 @@
     },
     data() {
       return {
-        'page': 1,
+        'page': this.$options.page,
         'filters': {},
         'filterSet': {
           'type': {
@@ -106,7 +103,7 @@
         if (this.hasFilters) {
           return this.$store.getters['filter/get_pagination'](this.$options.collection);
         } else {
-          return this.$store.getters['collection/get_pagination'](this.$options.collection);
+          return this.$store.getters['collection/get_pagination'](this.$options.collection, this.page);
         }
       },
     },
@@ -127,21 +124,22 @@
         });
       }
     },
-    async mounted() { // called on client side only
-
+    beforeMount() {
       let query = this.$route.query;
-      if (query.page) {
-        this.$options.page = query.page;
+      if (Utils.isInteger(query.page)) {
+        this.$options.page = parseInt(query.page);
       }
-
       // Update page data from page option
       this.page = this.$options.page;
-
+    },
+    async mounted() { // called on client side only
       if (this.$options.remote) {
         await this.$store.dispatch('collection/update_list_from_ssr', [this.$options.collection, this.$route.params[this.$options.key], this.$options.page]);
       } else {
         await this.$options.get_list(this.$store);
       }
+
+
     },
   }
 </script>
