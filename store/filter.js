@@ -1,5 +1,5 @@
+// TODO Use vue-router's stringify
 const queryString = require('query-string');
-
 
 export const state = () => ({
   institutes: {objects: [], pagination: {}}

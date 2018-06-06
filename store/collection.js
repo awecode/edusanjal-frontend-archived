@@ -63,7 +63,6 @@ export const actions = {
     commit('update_item', [collection_name, key, data]);
   },
   async update_list_from_ssr({commit}, [collection_name, key, page]) {
-
     let data = window.__NUXT__.state.collection[collection_name];
     commit('update_list_ssr', [collection_name, data, key, page]);
   },

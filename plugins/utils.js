@@ -11,3 +11,7 @@ Utils.clone = (obj) => {
 Utils.isInteger = (num) => {
   return !isNaN(num) && Number.isInteger(parseFloat(num))
 };
+
+Utils.merge = (a, b) => {
+  return Object.assign({}, a, b);
+};

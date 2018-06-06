@@ -61,9 +61,7 @@
     },
     async fetch({store, query}) {// fetch isn't called on client side if already called on server side
 
-      if (Utils.isInteger(query.page)) {
-        this.page = parseInt(query.page);
-      }
+      this.page = Utils.isInteger(query.page) ? parseInt(query.page) : 1;
 
       // if not in local storage, fetch
       if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
@@ -108,24 +106,45 @@
       },
     },
     methods: {
+      updateQuery(key, value) {
+        const validKeys = Object.keys(this.filterSet).concat(['page']);
+        if (!validKeys.includes(key)) {
+          return;
+        }
+        let query = Utils.clone(this.$route.query);
+        query[key] = value;
+        console.log(query);
+        this.$router.push({query: query});
+      },
       paginate(page) {
-        this.$options.page = page;
-        this.$options.get_list(this.$store).then(() => {
-          this.page = page;
-        });
+        // Unset page query for page 1
+        page = (page === 1) ? undefined : page;
+        this.updateQuery('page', page);
+//        this.$options.page = page;
+//        this.$options.get_list(this.$store).then(() => {
+//          this.page = page;
+//          this.updateQuery('page', page);
+//        });
       },
       filter(obj) {
+        let key = Object.keys(obj)[0];
+        if (key) {
+          this.updateQuery(key, Object.values(obj)[0]);
+        }
         // reset page count on filter
-        this.$options.filters = obj;
-        this.$options.page = 1;
-        this.page = 1;
-        this.$options.get_list(this.$store).then(() => {
-          this.filters = obj;
-        });
+//        console.log(obj);
+//        this.$options.filters = obj;
+//        this.$options.page = 1;
+//        this.page = 1;
+//        this.$options.get_list(this.$store).then(() => {
+//          this.filters = obj;
+//        });
       }
     },
     beforeMount() {
+      // handle query params
       let query = this.$route.query;
+
       if (Utils.isInteger(query.page)) {
         this.$options.page = parseInt(query.page);
       }
