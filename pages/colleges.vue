@@ -117,7 +117,7 @@
       },
       paginate(page) {
         // Unset page query for page 1
-        page = (page === 1) ? undefined : page;
+        page = (page === 1) ? [] : page;
         this.updateQuery('page', page);
       },
       filter(obj) {
@@ -125,29 +125,35 @@
         if (key) {
           this.updateQuery(key, Object.values(obj)[0]);
         }
-        // reset page count on filter
-//        console.log(obj);
-//        this.$options.filters = obj;
-//        this.$options.page = 1;
-//        this.page = 1;
-//        this.$options.get_list(this.$store).then(() => {
-//          this.filters = obj;
-//        });
       }
     },
     watch: {
       '$route.query': function (n, o) {
-        console.log(n);
-        console.log(o);
         // TODO handle cached
-        // TODO Check for page number change
+        // Check for page number change
         if (n.page !== o.page) {
-          const page = (n.page === undefined) ? 1 :n.page;
+          const page = (Utils.isFalsy(n.page)) ? 1 : n.page;
           this.$options.page = page;
           this.page = page;
           this.$options.get_list(this.$store).then(() => {
           });
         }
+        delete n.page;
+        delete o.page;
+
+        // TODO wait for some time, maybe another user input filter? cancel last pending request?
+
+        if (!Utils.isEqual(n, o)) {
+          this.$options.filters = n;
+          this.filters = n;
+          // reset page count on filter
+          this.$options.page = 1;
+          this.page = 1;
+          this.$options.get_list(this.$store).then(() => {
+//          this.filters = obj;
+          });
+        }
+
         // TODO Check filter change
         // TODO Check valid filters
       }
