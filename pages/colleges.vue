@@ -3,6 +3,7 @@
         <div class="container columns">
             <div class="column is-one-third">
                 <FilterCard :filter="filterSet.type" :filters="filters" @filter="filter"/>
+                <FilterCard :filter="filterSet.district" :filters="filters" @filter="filter"/>
             </div>
             <div class="column is-two-thirds">
                 <h1>{{title}}</h1>
@@ -59,6 +60,12 @@
         'param': 'type',
         'type': 'checkbox',
         'facets': ['Private', 'Community', 'Public']
+      },
+      'district': {
+        'name': 'District',
+        'param': 'district',
+        'type': 'checkbox',
+        'facets': ['Kathmandu', 'Bhaktapur', 'Lalitpur']
       }
     },
 
