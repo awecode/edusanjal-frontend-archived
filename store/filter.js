@@ -24,6 +24,7 @@ export const mutations = {
 
 export const actions = {
   async get_data({commit}, [collection_name, filters, page]) {
+    filters = Utils.clone(filters);
     filters.page = page;
     let url = `/${collection_name}/?${queryString.stringify(filters)}`;
     let {data} = await api.get(url);

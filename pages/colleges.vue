@@ -135,8 +135,7 @@
           const page = (Utils.isFalsy(n.page)) ? 1 : n.page;
           this.$options.page = page;
           this.page = page;
-          this.$options.get_list(this.$store).then(() => {
-          });
+          this.$options.get_list(this.$store);
         }
         delete n.page;
         delete o.page;
@@ -149,18 +148,13 @@
           // reset page count on filter
           this.$options.page = 1;
           this.page = 1;
-          this.$options.get_list(this.$store).then(() => {
-//          this.filters = obj;
-          });
+          this.$options.get_list(this.$store);
         }
-
-        // TODO Check filter change
-        // TODO Check valid filters
       }
     },
     beforeMount() {
       // handle query params
-      let query = this.$route.query;
+      let query = Utils.clone(this.$route.query);
 
       if (Utils.isInteger(query.page)) {
         this.$options.page = parseInt(query.page);
