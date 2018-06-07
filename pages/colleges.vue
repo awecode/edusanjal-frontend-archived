@@ -52,6 +52,7 @@
     collection: 'institutes',
     key: 'slug',
     filters: {},
+
     async get_list(store) {
       if (this.filters && Object.keys(this.filters).length) {
         await store.dispatch('filter/get_data', [this.collection, this.filters, this.page]);
@@ -59,10 +60,14 @@
         await store.dispatch('collection/get_list', [this.collection, this.key, this.page]);
       }
     },
-    async fetch({store, query}) {// fetch isn't called on client side if already called on server side
 
+    get_page(query) {
       this.page = Utils.isInteger(query.page) ? parseInt(query.page) : 1;
+      return this.page;
+    },
 
+    async fetch({store, query}) {// fetch isn't called on client side if already called on server side
+      this.get_page(query);
       // if not in local storage, fetch
       if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
         await this.get_list(store);
@@ -154,13 +159,7 @@
     },
     beforeMount() {
       // handle query params
-      let query = Utils.clone(this.$route.query);
-
-      if (Utils.isInteger(query.page)) {
-        this.$options.page = parseInt(query.page);
-      }
-      // Update page data from page option
-      this.page = this.$options.page;
+      this.page = this.$options.get_page(this.$route.query);
     },
     async mounted() { // called on client side only
       if (this.$options.remote) {
