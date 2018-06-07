@@ -36,10 +36,11 @@ export const mutations = {
       page_list.push(key);
       let obj = collection.objects[key] = collection.objects[key] || {};
       Object.assign(obj, item);
-      //  TODO remove from other pages?
+      // TODO remove from other pages?
     }
   },
   update_list_ssr(state, [collection_name, data, key_name, page]) {
+    // TODO implement merge instead of replace
     let collection = state[collection_name];
     collection.pagination = data.pagination;
     let page_array = Object.entries(data.pages)[0];

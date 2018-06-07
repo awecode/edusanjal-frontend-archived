@@ -52,6 +52,14 @@
     collection: 'institutes',
     key: 'slug',
     filters: {},
+    filterSet: {
+      'type': {
+        'name': 'Type',
+        'param': 'type',
+        'type': 'checkbox',
+        'facets': ['Private', 'Community', 'Public']
+      }
+    },
 
     async get_list(store) {
       if (this.filters && Object.keys(this.filters).length) {
@@ -66,8 +74,15 @@
       return this.page;
     },
 
+    get_filters(query) {
+//      delete query.page;
+      this.filters = query;
+      return this.filters;
+    },
+
     async fetch({store, query}) {// fetch isn't called on client side if already called on server side
       this.get_page(query);
+      this.get_filters(query);
       // if not in local storage, fetch
       if (!store.getters['collection/get_items_for_page'](this.collection, this.page).length) {
         await this.get_list(store);
@@ -79,16 +94,8 @@
     data() {
       return {
         'page': this.$options.page,
-        'filters': {},
-        'filterSet': {
-          'type': {
-            'name': 'Type',
-            'param': 'type',
-            'type': 'checkbox',
-            'facets': ['Private', 'Community', 'Public']
-          }
-        }
-
+        'filters': this.$options.filters,
+        'filterSet': this.$options.filterSet
       }
     },
     computed: {
@@ -147,10 +154,11 @@
 
         // TODO wait for some time, maybe another user input filter? cancel last pending request?
 
+        // Check for filter change
         if (!Utils.isEqual(n, o)) {
           this.$options.filters = n;
           this.filters = n;
-          // reset page count on filter
+          // reset page count on filter update
           this.$options.page = 1;
           this.page = 1;
           this.$options.get_list(this.$store);
@@ -160,6 +168,7 @@
     beforeMount() {
       // handle query params
       this.page = this.$options.get_page(this.$route.query);
+      this.filters = this.$options.get_filters(this.$route.query);
     },
     async mounted() { // called on client side only
       if (this.$options.remote) {
