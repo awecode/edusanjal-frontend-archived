@@ -43,15 +43,20 @@ Utils.isEmpty = isEmpty;
 
 Utils.isFalsy = function (o) {
   // Python like Falsy
-  if (typeof o == 'object') {
+  if (typeof o === 'object') {
     return isEmpty(o);
   }
   return !o;
 };
 
 
-Utils.clone = (obj) => {
-  return Vue.util.extend({}, obj)
+Utils.clone = (o) => {
+  if (Array.isArray(o)) {
+    return o.slice(0)
+  }
+  if (typeof o === 'object') {
+    return Vue.util.extend({}, o)
+  }
 };
 
 Utils.isInteger = (num) => {
@@ -60,4 +65,18 @@ Utils.isInteger = (num) => {
 
 Utils.merge = (a, b) => {
   return Object.assign({}, a, b);
+};
+
+Utils.stringToArray = (o) => {
+  return (typeof o === 'string') ? [o] : o;
+};
+
+Utils.englishList = (words) => {
+  words = Utils.clone(Utils.stringToArray(words));
+  if (words.length === 1) {
+    return words[0];
+  }
+  const last_word = words.pop();
+  let sans_last = (words.length === 1) ? words[0] : words.join(', ');
+  return sans_last + ' and ' + last_word;
 };

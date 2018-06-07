@@ -5,6 +5,7 @@
                 <FilterCard :filter="filterSet.type" :filters="filters" @filter="filter"/>
             </div>
             <div class="column is-two-thirds">
+                <h1>{{title}}</h1>
                 <div class="card mt1 mh1" v-for="obj in objs" :key="obj.slug">
                     <div class="card-content info list-item">
                         <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}" class="list-image">
@@ -75,7 +76,7 @@
     },
 
     get_filters(query) {
-//      delete query.page;
+      delete query.page;
       this.filters = query;
       return this.filters;
     },
@@ -116,6 +117,15 @@
           return this.$store.getters['collection/get_pagination'](this.$options.collection, this.page);
         }
       },
+      title() {
+        let str = 'Colleges in Nepal';
+        if (this.hasFilters) {
+          if (this.filters.type) {
+            str = Utils.englishList(this.filters.type) + ' ' + str;
+          }
+        }
+        return str;
+      }
     },
     methods: {
       updateQuery(key, value) {
@@ -156,8 +166,19 @@
 
         // Check for filter change
         if (!Utils.isEqual(n, o)) {
+
+          // remove empty filters
+          if (n) {
+            Object.keys(n).forEach((filter) => {
+              if (Utils.isFalsy(n[filter])) {
+                delete n[filter];
+              }
+            })
+          }
+
           this.$options.filters = n;
           this.filters = n;
+
           // reset page count on filter update
           this.$options.page = 1;
           this.page = 1;
@@ -168,7 +189,7 @@
     beforeMount() {
       // handle query params
       this.page = this.$options.get_page(this.$route.query);
-      this.filters = this.$options.get_filters(this.$route.query);
+      this.filters = this.$options.get_filters(Utils.clone(this.$route.query));
     },
     async mounted() { // called on client side only
       if (this.$options.remote) {

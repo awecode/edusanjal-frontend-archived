@@ -49,12 +49,12 @@
       // Get initial filter values
       let values = {};
       let filters = this.filters[this.filter.param];
-      if (typeof filters === 'string') {
-        filters = [filters]
+      if (filters) {
+        filters = Utils.stringToArray(filters);
+        filters.forEach((val) => {
+          values[val] = true
+        });
       }
-      filters.forEach((val) => {
-        values[val] = true
-      });
       return {
         'values': values,
       }
