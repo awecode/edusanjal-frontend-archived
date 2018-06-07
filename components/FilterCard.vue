@@ -29,7 +29,7 @@
 
 <script>
   export default {
-    props: ['filter'],
+    props: ['filter', 'filters'],
     methods: {
       changed() {
         let fields = [];
@@ -40,14 +40,23 @@
         });
         let out_data = {};
 //        if (fields.length) {
-          out_data[this.filter.param] = fields;
+        out_data[this.filter.param] = fields;
 //        }
         this.$emit('filter', out_data);
       }
     },
     data() {
+      // Get initial filter values
+      let values = {};
+      let filters = this.filters[this.filter.param];
+      if (typeof filters === 'string') {
+        filters = [filters]
+      }
+      filters.forEach((val) => {
+        values[val] = true
+      });
       return {
-        'values': {},
+        'values': values,
       }
     },
   }

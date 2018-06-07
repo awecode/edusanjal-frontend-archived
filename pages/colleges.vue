@@ -2,7 +2,7 @@
     <div class="bg-grey p1">
         <div class="container columns">
             <div class="column is-one-third">
-                <FilterCard :filter="filterSet.type" @filter="filter"/>
+                <FilterCard :filter="filterSet.type" :filters="filters" @filter="filter"/>
             </div>
             <div class="column is-two-thirds">
                 <div class="card mt1 mh1" v-for="obj in objs" :key="obj.slug">
