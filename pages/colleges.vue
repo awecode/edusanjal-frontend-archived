@@ -134,6 +134,7 @@
           return;
         }
         let query = Utils.clone(this.$route.query);
+        // TODO sort query except for page which should be at the end
         query[key] = value;
         this.$router.push({query: query});
       },
@@ -145,13 +146,14 @@
       filter(obj) {
         let key = Object.keys(obj)[0];
         if (key) {
-          this.updateQuery(key, Object.values(obj)[0]);
+          let values = Object.values(obj)[0];
+          values.sort(Utils.ascending);
+          this.updateQuery(key, values);
         }
       }
     },
     watch: {
       '$route.query': function (n, o) {
-        // TODO handle cached
         // Check for page number change
         if (n.page !== o.page) {
           const page = (Utils.isFalsy(n.page)) ? 1 : n.page;
@@ -173,7 +175,7 @@
               if (Utils.isFalsy(n[filter])) {
                 delete n[filter];
               }
-            })
+            });
           }
 
           this.$options.filters = n;

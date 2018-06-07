@@ -80,3 +80,7 @@ Utils.englishList = (words) => {
   let sans_last = (words.length === 1) ? words[0] : words.join(', ');
   return sans_last + ' and ' + last_word;
 };
+
+Utils.ascending = (a, b) => {
+  return a.localeCompare(b);
+};
