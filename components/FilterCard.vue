@@ -32,16 +32,15 @@
     props: ['agg', 'filters', 'name', 'param'],
     methods: {
       changed() {
-        return;
         let fields = [];
         Object.entries(this.values).forEach(function (obj) {
-          if (obj[1]) {
+          if (obj[1].checked) {
             fields.push(obj[0]);
           }
         });
         let out_data = {};
 //        if (fields.length) {
-        out_data[this.filter.param] = fields;
+        out_data[this.param] = fields;
 //        }
         this.$emit('filter', out_data);
       }
