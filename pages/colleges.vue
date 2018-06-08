@@ -126,7 +126,7 @@
       },
       aggregation() {
         let aggregation = {};
-        aggregation.global = this.$store.getters['collection/get_pagination'](this.$options.collection, this.page);
+        aggregation.global = this.$store.getters['collection/get_aggregation'](this.$options.collection);
         if (this.hasFilters) {
           aggregation.local = this.$store.getters['filter/get_aggregation'](this.$options.collection);
         }
