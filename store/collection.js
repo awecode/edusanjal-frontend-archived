@@ -1,5 +1,5 @@
 export const state = () => ({
-  institutes: {objects: {}, pagination: {}, pages: {}, key: 'slug', agg: {}}
+  institutes: {objects: {}, pagination: {}, pages: {}, key: 'slug', aggregation: {}}
 });
 
 export const getters = {
@@ -16,7 +16,9 @@ export const getters = {
     // update pagination data with current page number
     pagination_data.page = page;
     return pagination_data;
-
+  },
+  get_aggregation: (state) => (collection_name,) => {
+    return state[collection_name].aggregation;
   }
 };
 
@@ -31,7 +33,7 @@ export const mutations = {
     let collection = state[collection_name];
     collection.pagination = data.pagination;
     if (data.global_agg) {
-      collection.agg = data.global_agg;
+      collection.aggregation = data.global_agg;
     }
     let page_list = collection.pages[page + ''] = [];
     for (let item of data.results) {

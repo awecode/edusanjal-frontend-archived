@@ -2,7 +2,7 @@
 const queryString = require('query-string');
 
 export const state = () => ({
-  institutes: {objects: [], pagination: {}}
+  institutes: {objects: [], pagination: {}, aggregation: {}}
 });
 
 export const getters = {
@@ -11,6 +11,9 @@ export const getters = {
   },
   get_pagination: (state) => (collection_name) => {
     return state[collection_name].pagination;
+  },
+  get_aggregation: (state) => (collection_name) => {
+    return state[collection_name].aggregation;
   }
 };
 
@@ -18,6 +21,8 @@ export const mutations = {
   update_data(state, [collection_name, data]) {
     let collection = state[collection_name];
     collection.pagination = data.pagination;
+    collection.aggregation = data.local_agg;
+    // TODO Update global aggregation
     collection.objects = data.results;
   },
 };
