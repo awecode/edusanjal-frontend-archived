@@ -1,5 +1,5 @@
 export const state = () => ({
-  institutes: {objects: {}, pagination: {}, pages: {}, key: 'slug'}
+  institutes: {objects: {}, pagination: {}, pages: {}, key: 'slug', agg: {}}
 });
 
 export const getters = {
@@ -30,6 +30,9 @@ export const mutations = {
   update_list(state, [collection_name, data, key_name, page]) {
     let collection = state[collection_name];
     collection.pagination = data.pagination;
+    if (data.global_agg) {
+      collection.agg = data.global_agg;
+    }
     let page_list = collection.pages[page + ''] = [];
     for (let item of data.results) {
       let key = item[key_name];

@@ -207,7 +207,6 @@
         await this.$options.get_list(this.$store);
       }
 
-
     },
   }
 </script>
