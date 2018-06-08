@@ -2,8 +2,8 @@
     <div class="bg-grey p1">
         <div class="container columns">
             <div class="column is-one-third">
-                <FilterCard :filter="filterSet.type" :filters="filters" @filter="filter"/>
-                <FilterCard :filter="filterSet.district" :filters="filters" @filter="filter"/>
+                <FilterCard name="Ownership" param="type" :agg="aggregation" :filters="filters" @filter="filter"/>
+                <!--<FilterCard :filter="filterSet.district" :filters="filters" @filter="filter"/>-->
             </div>
             <div class="column is-two-thirds">
                 <h1>{{title}}</h1>

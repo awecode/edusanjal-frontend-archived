@@ -2,7 +2,7 @@
     <div class="card">
         <header class="card-header">
             <p class="card-header-title">
-                {{filter.name}}
+                {{name}}
             </p>
             <a href="#" class="card-header-icon" aria-label="more options">
       <span class="icon">
@@ -12,16 +12,16 @@
         </header>
         <div class="card-content">
             <div class="content">
-                <div class="checkboxes" v-if="filter.type === 'checkbox'">
-                    <form ref="filterForm" @change="changed">
-                        <div v-for="facet in filter.facets" :key="facet">
-                            <label class="checkbox">
-                                <input v-model="values[facet]" type="checkbox">
-                                {{facet}}
-                            </label>
-                        </div>
-                    </form>
+                <!--<div class="checkboxes" v-if="filter.type === 'checkbox'">-->
+                <form @change="changed">
+                <div v-for="(value, key) in values" :key="key">
+                <label class="checkbox">
+                <input v-model="value.checked" type="checkbox">
+                {{key}} [{{value.global}}]
+                </label>
                 </div>
+                </form>
+                <!--</div>-->
             </div>
         </div>
     </div>
@@ -29,9 +29,10 @@
 
 <script>
   export default {
-    props: ['filter', 'filters'],
+    props: ['agg', 'filters', 'name', 'param'],
     methods: {
       changed() {
+        return;
         let fields = [];
         Object.entries(this.values).forEach(function (obj) {
           if (obj[1]) {
@@ -46,15 +47,24 @@
       }
     },
     data() {
-      // Get initial filter values
+      // Get initial facet values
       let values = {};
-      let filters = this.filters[this.filter.param];
-      if (filters) {
-        filters = Utils.stringToArray(filters);
-        filters.forEach((val) => {
-          values[val] = true
+      if (this.agg.global && this.agg.global[this.param] && this.agg.global[this.param].length) {
+        this.agg.global[this.param].forEach((facet) => {
+          values[facet.key] = {
+            global: facet.doc_count,
+            checked: false
+          }
         });
       }
+//      let filters = this.filters[this.filter.param];
+//      if (filters) {
+//        filters = Utils.stringToArray(filters);
+//        filters.forEach((val) => {
+//          values[val] = true
+//        });
+//      }
+      console.log(values);
       return {
         'values': values,
       }
