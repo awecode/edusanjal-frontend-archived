@@ -16,7 +16,7 @@
                     <div v-for="(value, key) in values" :key="key">
                         <label class="checkbox">
                             <input v-model="value.checked" type="checkbox">
-                            {{key}} [{{value.global}}]
+                            {{key}} [{{value.local}}/{{value.global}}]
                         </label>
                     </div>
                 </form>
@@ -43,38 +43,52 @@ export default {
       this.$emit("filter", out_data);
     }
   },
-  data() {
-    let values = {};
-    // Build facet from aggregation
-    if (
-      this.agg.global &&
-      this.agg.global[this.param] &&
-      this.agg.global[this.param].length
-    ) {
-      this.agg.global[this.param].forEach(facet => {
-        values[facet.key] = {
-          global: facet.doc_count,
-          checked: false
-        };
-      });
-    }
-    // Get initial facet values
-    let filters = this.filters[this.param];
-    //      console.log(filters);
-    if (process.browser) {
-      if (filters) {
-        filters = Utils.stringToArray(filters);
-        filters.forEach(val => {
-          if (typeof values[val] == "undefined") {
-            values[val] = {};
-          }
-          values[val].checked = true;
+  computed: {
+    values() {
+      let values = {};
+
+      // Build global facet from aggregation
+      if (
+        this.agg.global &&
+        this.agg.global[this.param] &&
+        this.agg.global[this.param].length
+      ) {
+        this.agg.global[this.param].forEach(facet => {
+          values[facet.key] = {
+            global: facet.doc_count,
+            local: 0,
+            checked: false
+          };
         });
       }
+
+      // Build local facet from aggregation
+      if (
+        this.agg.local &&
+        this.agg.local[this.param] &&
+        this.agg.local[this.param].length
+      ) {
+        this.agg.local[this.param].forEach(facet => {
+          values[facet.key].local = facet.doc_count;
+        });
+      }
+
+      // Get initial facet values
+      let filters = this.filters[this.param];
+      //      console.log(filters);
+      if (process.browser) {
+        if (filters) {
+          filters = Utils.stringToArray(filters);
+          filters.forEach(val => {
+            if (typeof values[val] == "undefined") {
+              values[val] = {};
+            }
+            values[val].checked = true;
+          });
+        }
+      }
+      return values;
     }
-    return {
-      values: values
-    };
-  }
+  },
 };
 </script>
