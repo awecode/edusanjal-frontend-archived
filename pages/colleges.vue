@@ -169,6 +169,11 @@ export default {
       return str;
     }
   },
+  head() {
+    return {
+      title: this.title
+    };
+  },
   methods: {
     updateQuery(key, value) {
       const validKeys = Object.keys(this.filterSet).concat(["page"]);
