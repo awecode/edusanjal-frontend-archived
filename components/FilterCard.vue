@@ -16,7 +16,9 @@
                     <div v-for="(value, key) in values" :key="key">
                         <label class="checkbox">
                             <input v-model="value.checked" type="checkbox">
-                            {{key}} [{{value.local}}/{{value.global}}]
+                            {{key}} [
+                            <span v-if="hasFilters">{{value.local}}/</span>
+                            {{value.global}}]
                         </label>
                     </div>
                 </form>
@@ -44,6 +46,9 @@ export default {
     }
   },
   computed: {
+    hasFilters(){
+      return !Utils.isFalsy(this.filters);
+    },
     values() {
       let values = {};
 

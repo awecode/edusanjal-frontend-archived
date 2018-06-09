@@ -35,7 +35,7 @@ const isEmpty = function (o) {
     return true
   }
   if (typeof o === 'object' && Object.keys(o).length === 0) {
-    return True
+    return true
   }
 };
 
