@@ -12,61 +12,69 @@
         </header>
         <div class="card-content">
             <div class="content">
-                <!--<div class="checkboxes" v-if="filter.type === 'checkbox'">-->
                 <form @change="changed">
-                <div v-for="(value, key) in values" :key="key">
-                <label class="checkbox">
-                <input v-model="value.checked" type="checkbox">
-                {{key}} [{{value.global}}]
-                </label>
-                </div>
+                    <div v-for="(value, key) in values" :key="key">
+                        <label class="checkbox">
+                            <input v-model="value.checked" type="checkbox">
+                            {{key}} [{{value.global}}]
+                        </label>
+                    </div>
                 </form>
-                <!--</div>-->
             </div>
         </div>
     </div>
 </template>
 
 <script>
-  export default {
-    props: ['agg', 'filters', 'name', 'param'],
-    methods: {
-      changed() {
-        let fields = [];
-        Object.entries(this.values).forEach(function (obj) {
-          if (obj[1].checked) {
-            fields.push(obj[0]);
+export default {
+  props: ["agg", "filters", "name", "param"],
+  methods: {
+    changed() {
+      let fields = [];
+      Object.entries(this.values).forEach(function(obj) {
+        if (obj[1].checked) {
+          fields.push(obj[0]);
+        }
+      });
+      let out_data = {};
+      //        if (fields.length) {
+      out_data[this.param] = fields;
+      //        }
+      this.$emit("filter", out_data);
+    }
+  },
+  data() {
+    let values = {};
+    // Build facet from aggregation
+    if (
+      this.agg.global &&
+      this.agg.global[this.param] &&
+      this.agg.global[this.param].length
+    ) {
+      this.agg.global[this.param].forEach(facet => {
+        values[facet.key] = {
+          global: facet.doc_count,
+          checked: false
+        };
+      });
+    }
+    // Get initial facet values
+    let filters = this.filters[this.param];
+    //      console.log(filters);
+    if (process.browser) {
+      if (filters) {
+        filters = Utils.stringToArray(filters);
+        filters.forEach(val => {
+          if (typeof values[val] == "undefined") {
+            values[val] = {};
           }
-        });
-        let out_data = {};
-//        if (fields.length) {
-        out_data[this.param] = fields;
-//        }
-        this.$emit('filter', out_data);
-      }
-    },
-    data() {
-      // Get initial facet values
-      let values = {};
-      if (this.agg.global && this.agg.global[this.param] && this.agg.global[this.param].length) {
-        this.agg.global[this.param].forEach((facet) => {
-          values[facet.key] = {
-            global: facet.doc_count,
-            checked: false
-          }
+          values[val].checked = true;
         });
       }
-//      let filters = this.filters[this.filter.param];
-//      if (filters) {
-//        filters = Utils.stringToArray(filters);
-//        filters.forEach((val) => {
-//          values[val] = true
-//        });
-//      }
-      console.log(values);
-      return {
-        'values': values,
-      }
-    },
+    }
+    return {
+      values: values
+    };
   }
+};
 </script>

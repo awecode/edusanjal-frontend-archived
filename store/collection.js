@@ -1,5 +1,5 @@
 export const state = () => ({
-  institutes: {objects: {}, pagination: {}, pages: {}, key: 'slug', aggregation: {}}
+  institutes: { objects: {}, pagination: {}, pages: {}, key: 'slug', aggregation: {} }
 });
 
 export const getters = {
@@ -17,7 +17,7 @@ export const getters = {
     pagination_data.page = page;
     return pagination_data;
   },
-  get_aggregation: (state) => (collection_name,) => {
+  get_aggregation: (state) => (collection_name, ) => {
     return state[collection_name].aggregation;
   }
 };
@@ -48,6 +48,7 @@ export const mutations = {
     // TODO implement merge instead of replace
     let collection = state[collection_name];
     collection.pagination = data.pagination;
+    collection.aggregation = data.aggregation;
     let page_array = Object.entries(data.pages)[0];
     if (page_array) {
       collection.pages[page_array[0]] = page_array[1];
@@ -58,21 +59,21 @@ export const mutations = {
 };
 
 export const actions = {
-  async get_list({commit}, [collection_name, key_name, page]) {
+  async get_list({ commit }, [collection_name, key_name, page]) {
     let url = `/${collection_name}/?page=${page}`;
-    let {data} = await api.get(url);
+    let { data } = await api.get(url);
     commit('update_list', [collection_name, data, key_name, page]);
   },
-  async get_item({commit}, [collection_name, key]) {
+  async get_item({ commit }, [collection_name, key]) {
     let url = `/${collection_name}/${key}/`;
-    let {data} = await api.get(url);
+    let { data } = await api.get(url);
     commit('update_item', [collection_name, key, data]);
   },
-  async update_list_from_ssr({commit}, [collection_name, key, page]) {
+  async update_list_from_ssr({ commit }, [collection_name, key, page]) {
     let data = window.__NUXT__.state.collection[collection_name];
     commit('update_list_ssr', [collection_name, data, key, page]);
   },
-  async update_item_from_ssr({commit}, [collection_name, key]) {
+  async update_item_from_ssr({ commit }, [collection_name, key]) {
     let data = window.__NUXT__.state.collection[collection_name].objects[key];
     commit('update_item', [collection_name, key, data]);
   },
