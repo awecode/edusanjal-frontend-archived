@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" v-if="this.hasValues">
         <header class="card-header">
             <p class="card-header-title">
                 {{name}}
@@ -48,6 +48,9 @@ export default {
   computed: {
     hasFilters(){
       return !Utils.isFalsy(this.filters);
+    },
+    hasValues(){
+      return !Utils.isFalsy(this.values);
     },
     values() {
       let values = {};
