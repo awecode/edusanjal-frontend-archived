@@ -160,13 +160,17 @@ export default {
       return aggregation;
     },
     title() {
-      let str = "Colleges in Nepal";
+      let str = "Colleges";
+      let location = "Nepal";
       if (this.hasFilters) {
         if (this.filters.type) {
           str = Utils.englishList(this.filters.type) + " " + str;
         }
+        if (this.filters.district) {
+          location = Utils.englishList(this.filters.district);
+        }
       }
-      return str;
+      return str + " in " + location;
     }
   },
   head() {
