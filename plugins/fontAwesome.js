@@ -10,6 +10,7 @@ import AngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown'
 import At from '@fortawesome/fontawesome-free-solid/faAt'
 import Globe from '@fortawesome/fontawesome-free-solid/faGlobe'
 import University from '@fortawesome/fontawesome-free-solid/faUniversity'
+import Search from '@fortawesome/fontawesome-free-solid/faSearch'
 
 
-fontawesome.library.add(LocationArrow, Building, Phone, AngleLeft, AngleRight, AngleUp, AngleDown, At, Globe, University);
+fontawesome.library.add(LocationArrow, Building, Phone, AngleLeft, AngleRight, AngleUp, AngleDown, At, Globe, University, Search);

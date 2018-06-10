@@ -11,8 +11,11 @@
             </a>
         </header>
         <div class="card-content">
-          <div v-if="this.search">
-            <input placeholder="Search..." v-model="q"/>
+          <div v-if="this.search" class="control has-icons-left has-icons-right">
+            <input placeholder="Search..." v-model="q" class="input"/>
+            <span class="icon is-small is-left">
+              <FA i="search"/>
+            </span>
           </div>
             <div class="content">
                 <form @change="changed">
