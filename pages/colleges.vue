@@ -3,6 +3,7 @@
         <div class="container columns">
             <div class="column is-one-third">
                 <FilterCard name="Ownership" param="type" :agg="aggregation" :filters="filters" @filter="filter"/>
+                <FilterCard name="Affiliation" param="affiliation" :agg="aggregation" :filters="filters" @filter="filter"/>
                 <FilterCard name="District" param="district" :agg="aggregation" :filters="filters" @filter="filter"/>
             </div>
             <div class="column is-two-thirds">
@@ -54,21 +55,6 @@ export default {
   collection: "institutes",
   key: "slug",
   filters: {},
-  filterSet: {
-    type: {
-      name: "Type",
-      param: "type",
-      type: "checkbox",
-      facets: ["Private", "Community", "Public"]
-    },
-    district: {
-      name: "District",
-      param: "district",
-      type: "checkbox",
-      facets: ["Kathmandu", "Bhaktapur", "Lalitpur"]
-    }
-  },
-
   async get_list(store) {
     if (this.filters && Object.keys(this.filters).length) {
       await store.dispatch("filter/get_data", [
@@ -116,7 +102,6 @@ export default {
     return {
       page: this.$options.page,
       filters: this.$options.filters,
-      filterSet: this.$options.filterSet
     };
   },
   computed: {
@@ -180,10 +165,10 @@ export default {
   },
   methods: {
     updateQuery(key, value) {
-      const validKeys = Object.keys(this.filterSet).concat(["page"]);
-      if (!validKeys.includes(key)) {
-        return;
-      }
+      // const validKeys = Object.keys(this.filterSet).concat(["page"]);
+      // if (!validKeys.includes(key)) {
+      //   return;
+      // }
       let query = Utils.clone(this.$route.query);
       // TODO sort query except for page which should be at the end
       query[key] = value;
