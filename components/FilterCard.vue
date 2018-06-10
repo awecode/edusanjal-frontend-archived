@@ -11,6 +11,9 @@
             </a>
         </header>
         <div class="card-content">
+          <div v-if="this.search">
+            <input placeholder="Search..." v-model="q"/>
+          </div>
             <div class="content">
                 <form @change="changed">
                     <div v-for="(value, key) in values" :key="key">
@@ -29,7 +32,18 @@
 
 <script>
 export default {
-  props: ["agg", "filters", "name", "param"],
+  props: {
+    agg: {},
+    filters: {},
+    name: "",
+    param: "",
+    search: { default: false }
+  },
+  data() {
+    return {
+      q: ""
+    };
+  },
   methods: {
     changed() {
       let fields = [];
@@ -46,11 +60,11 @@ export default {
     }
   },
   computed: {
-    hasFilters(){
+    hasFilters() {
       return !Utils.isFalsy(this.filters);
     },
-    hasValues(){
-      return !Utils.isFalsy(this.values);
+    hasValues() {
+      return !Utils.isFalsy(this.values) || this.q;
     },
     values() {
       let values = {};
@@ -62,11 +76,14 @@ export default {
         this.agg.global[this.param].length
       ) {
         this.agg.global[this.param].forEach(facet => {
-          values[facet.key] = {
-            global: facet.doc_count,
-            local: 0,
-            checked: false
-          };
+          let match = !this.q || Utils.strContains(facet.key, this.q);
+          if (match) {
+            values[facet.key] = {
+              global: facet.doc_count,
+              local: 0,
+              checked: false
+            };
+          }
         });
       }
 
@@ -83,7 +100,6 @@ export default {
 
       // Get initial facet values
       let filters = this.filters[this.param];
-      //      console.log(filters);
       if (process.browser) {
         if (filters) {
           filters = Utils.stringToArray(filters);
@@ -97,6 +113,6 @@ export default {
       }
       return values;
     }
-  },
+  }
 };
 </script>

@@ -2,9 +2,10 @@
     <div class="bg-grey p1">
         <div class="container columns">
             <div class="column is-one-third">
+                <FilterCard name="Level" param="level" :agg="aggregation" :filters="filters" @filter="filter"/>
                 <FilterCard name="Ownership" param="type" :agg="aggregation" :filters="filters" @filter="filter"/>
                 <FilterCard name="Affiliation" param="affiliation" :agg="aggregation" :filters="filters" @filter="filter"/>
-                <FilterCard name="District" param="district" :agg="aggregation" :filters="filters" @filter="filter"/>
+                <FilterCard name="District" param="district" :agg="aggregation" :filters="filters" @filter="filter" :search="true"/>
             </div>
             <div class="column is-two-thirds">
                 <h1>{{title}}</h1>
@@ -101,7 +102,7 @@ export default {
   data() {
     return {
       page: this.$options.page,
-      filters: this.$options.filters,
+      filters: this.$options.filters
     };
   },
   computed: {

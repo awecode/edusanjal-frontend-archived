@@ -84,3 +84,8 @@ Utils.englishList = (words) => {
 Utils.ascending = (a, b) => {
   return a.localeCompare(b);
 };
+
+Utils.strContains = (str, match) => {
+  return str.toLowerCase().indexOf(match.toLowerCase()) !== -1;
+
+}
