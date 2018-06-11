@@ -38,7 +38,7 @@ module.exports = {
     // {src: '~/plugins/utils.js'},
   ],
   env: {
-    API_URL: isDev ? 'http://192.168.0.143:8000' : 'https://api.edusanjal.com/'
+    API_URL: isDev ? 'http://192.168.0.143:8000' : 'https://uat.edusanjal.com/v1/'
   },
   /*
   ** Build configuration
