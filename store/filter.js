@@ -2,7 +2,8 @@
 const queryString = require('query-string');
 
 export const state = () => ({
-  institutes: { objects: [], pagination: {}, aggregation: {} }
+  institutes: { objects: [], pagination: {}, aggregation: {} },
+  programs: { objects: [], pagination: {}, aggregation: {} }
 });
 
 export const getters = {
