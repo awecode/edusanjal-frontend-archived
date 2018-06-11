@@ -35,7 +35,7 @@ module.exports = {
     {src: '~/plugins/clientUtils.js', ssr: false},
     {src: '~/plugins/fontAwesome.js', ssr: false},
     {src: '~/plugins/faComponent.js'},
-    // {src: '~/plugins/utils.js'},
+    {src: '~/plugins/utils.js'},
   ],
   env: {
     API_URL: isDev ? 'http://192.168.0.143:8000' : 'https://uat.edusanjal.com/v1/'

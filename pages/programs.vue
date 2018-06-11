@@ -3,16 +3,13 @@
         <div class="container columns">
             <div class="column is-one-third">
                 <FilterCard name="Level" param="level" :agg="aggregation" :filters="filters" @filter="filter"/>
-                <FilterCard name="Ownership" param="type" :agg="aggregation" :filters="filters" @filter="filter"/>
                 <FilterCard name="Affiliation" param="affiliation" :agg="aggregation" :filters="filters" @filter="filter"/>
-                <FilterCard name="District" param="district" :agg="aggregation" :filters="filters" @filter="filter" :search="true"/>
             </div>
             <div class="column is-two-thirds">
                 <h1>{{title}}</h1>
                 <div class="card mt1 mh1" v-for="obj in objs" :key="obj.slug">
                     <div class="card-content info list-item">
                         <nuxt-link :to="{name: 'slug', params: {slug: obj.slug}}" class="list-image">
-                            <img :src="obj.logo_set.small" :alt="obj.name" :title="obj.name"/>
                         </nuxt-link>
                         <div class="list-detail">
                             <div>
@@ -45,15 +42,14 @@
 </template>
 
 <script>
-import Verified from "~/components/Verified.vue";
 import Pagination from "~/components/Pagination.vue";
 import FilterCard from "~/components/FilterCard.vue";
 
 export default {
   remote: true,
   page: 1,
-  components: { Verified, Pagination, FilterCard },
-  collection: "institutes",
+  components: { Pagination, FilterCard },
+  collection: "programs",
   key: "slug",
   filters: {},
   async get_list(store) {
@@ -146,17 +142,8 @@ export default {
       return aggregation;
     },
     title() {
-      let str = "Colleges";
-      let location = "Nepal";
-      if (this.hasFilters) {
-        if (this.filters.type) {
-          str = Utils.englishList(this.filters.type) + " " + str;
-        }
-        if (this.filters.district) {
-          location = Utils.englishList(this.filters.district);
-        }
-      }
-      return str + " in " + location;
+      let str = "Programs";
+      return str;
     }
   },
   head() {

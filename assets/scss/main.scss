@@ -5,6 +5,9 @@
 @import "~bulma/sass/components/navbar";
 @import "~bulma/sass/components/tabs";
 @import "~bulma/sass/components/card";
+@import "~bulma/sass/components/pagination";
+@import "~bulma/sass/components/panel";
+@import "~bulma/sass/elements/form";
 @import "~bulma/sass/grid/columns";
 //@import 'mixins';
 @import 'carousel';
@@ -169,4 +172,10 @@ i.gap:before {
 
 h3 {
   font-size: 1.6rem;
+}
+
+.pagination{
+  a{
+    background: #fff;
+  }
 }
