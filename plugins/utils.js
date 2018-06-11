@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+global.Vue = Vue;
+
 global.Utils = {};
 
 Utils.extend = Vue.util.extend;
