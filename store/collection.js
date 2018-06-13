@@ -14,6 +14,7 @@ export const getters = {
     }
   },
   get_pagination: (state) => (collection_name, segment_name, page) => {
+
     let pagination_data = Utils.clone(state[collection_name][segment_name].pagination);
     // update pagination data with current page number
     pagination_data.page = page;
@@ -54,10 +55,10 @@ export const mutations = {
     let collection = state[collection_name];
     let segment = collection[segment_name];
 
-    segment.pagination = data.pagination;
-    segment.aggregation = data.aggregation;
+    segment.pagination = data[segment_name].pagination;
+    segment.aggregation = data[segment_name].aggregation;
 
-    let page_array = Object.entries(data.pages)[0];
+    let page_array = Object.entries(data[segment_name].pages)[0];
     if (page_array) {
       segment.pages[page_array[0]] = page_array[1];
     }

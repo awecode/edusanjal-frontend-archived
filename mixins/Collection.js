@@ -19,6 +19,7 @@ export default {
             await store.dispatch("collection/get_list", [
                 this.collection,
                 this.key,
+                this.segment,
                 this.page
             ]);
         }
@@ -43,6 +44,7 @@ export default {
         if (
             !store.getters["collection/get_items_for_page"](
                 this.collection,
+                this.segment,
                 this.page
             ).length
         ) {
@@ -69,6 +71,7 @@ export default {
             } else {
                 return this.$store.getters["collection/get_items_for_page"](
                     this.$options.collection,
+                    this.$options.segment,
                     this.page
                 );
             }
@@ -81,6 +84,7 @@ export default {
             } else {
                 return this.$store.getters["collection/get_pagination"](
                     this.$options.collection,
+                    this.$options.segment,
                     this.page
                 );
             }
@@ -88,7 +92,7 @@ export default {
         aggregation() {
             let aggregation = {};
             aggregation.global = this.$store.getters["collection/get_aggregation"](
-                this.$options.collection
+                this.$options.collection, this.$options.segment
             );
             if (this.hasFilters) {
                 aggregation.local = this.$store.getters["filter/get_aggregation"](
@@ -177,6 +181,7 @@ export default {
             await this.$store.dispatch("collection/update_list_from_ssr", [
                 this.$options.collection,
                 this.$route.params[this.$options.key],
+                this.$options.segment,
                 this.$options.page
             ]);
         } else {
