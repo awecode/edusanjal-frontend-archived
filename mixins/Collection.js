@@ -5,7 +5,8 @@ export default {
     remote: true,
     page: 1,
     components: { Pagination, FilterCard },
-    key: "slug",
+    segment: 'all',
+    key: 'slug',
     filters: {},
     async get_list(store) {
         if (this.filters && Object.keys(this.filters).length) {
