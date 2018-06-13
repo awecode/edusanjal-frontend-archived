@@ -5,22 +5,22 @@ export const state = () => ({
 });
 
 export const getters = {
-  get_items_for_page: (state) => (collection_name, segment, page) => {
-    let keys = state[collection_name][segment].pages[page + ''];
+  get_items_for_page: (state) => (collection_name, segment_name, page) => {
+    let keys = state[collection_name][segment_name].pages[page + ''];
     if (keys) {
       return Object.entries(state[collection_name].objects).filter(o => keys.includes(o[0])).map(o => o[1]);
     } else {
       return [];
     }
   },
-  get_pagination: (state) => (collection_name, segment, page) => {
-    let pagination_data = Utils.clone(state[collection_name][segment].pagination);
+  get_pagination: (state) => (collection_name, segment_name, page) => {
+    let pagination_data = Utils.clone(state[collection_name][segment_name].pagination);
     // update pagination data with current page number
     pagination_data.page = page;
     return pagination_data;
   },
-  get_aggregation: (state) => (collection_name, segment) => {
-    return state[collection_name][segment].aggregation;
+  get_aggregation: (state) => (collection_name, segment_name) => {
+    return state[collection_name][segment_name].aggregation;
   }
 };
 
@@ -31,9 +31,9 @@ export const mutations = {
     let obj = collection.objects[key] = collection.objects[key] || {};
     Object.assign(obj, data);
   },
-  update_list(state, [collection_name, data, key_name, segment, page]) {
+  update_list(state, [collection_name, data, key_name, segment_name, page]) {
     let collection = state[collection_name];
-    let segment = collection[segment];
+    let segment = collection[segment_name];
 
     segment.pagination = data.pagination;
     if (data.global_agg) {
@@ -49,10 +49,10 @@ export const mutations = {
       // TODO remove from other pages?
     }
   },
-  update_list_ssr(state, [collection_name, data, key_name, segment, page]) {
+  update_list_ssr(state, [collection_name, data, key_name, segment_name, page]) {
     // TODO implement merge instead of replace
     let collection = state[collection_name];
-    let segment = collection[segment];
+    let segment = collection[segment_name];
 
     segment.pagination = data.pagination;
     segment.aggregation = data.aggregation;
@@ -67,25 +67,25 @@ export const mutations = {
 };
 
 export const actions = {
-  async get_list({ commit }, [collection_name, key_name, segment, page]) {
+  async get_list({ commit }, [collection_name, key_name, segment_name, page]) {
     let url;
-    if (segment === 'all') {
+    if (segment_name === 'all') {
       url = `/${collection_name}/?page=${page}`;
     }
     else {
-      url = `/${collection_name}/${segment}?page=${page}`;
+      url = `/${collection_name}/${segment_name}?page=${page}`;
     }
     let { data } = await api.get(url);
-    commit('update_list', [collection_name, data, key_name, segment, page]);
+    commit('update_list', [collection_name, data, key_name, segment_name, page]);
   },
   async get_item({ commit }, [collection_name, key]) {
     let url = `/${collection_name}/${key}/`;
     let { data } = await api.get(url);
     commit('update_item', [collection_name, key, data]);
   },
-  async update_list_from_ssr({ commit }, [collection_name, key, segment, page]) {
+  async update_list_from_ssr({ commit }, [collection_name, key, segment_name, page]) {
     let data = window.__NUXT__.state.collection[collection_name];
-    commit('update_list_ssr', [collection_name, data, key, segment, page]);
+    commit('update_list_ssr', [collection_name, data, key, segment_name, page]);
   },
   async update_item_from_ssr({ commit }, [collection_name, key]) {
     let data = window.__NUXT__.state.collection[collection_name].objects[key];
