@@ -30,10 +30,16 @@ export const mutations = {
 };
 
 export const actions = {
-  async get_data({ commit, rootState }, [collection_name, filters, page]) {
+  async get_data({ commit, rootState }, [collection_name, filters, segment_name, page]) {
     filters = Utils.clone(filters);
     filters.page = page;
-    let url = `/${collection_name}/?${queryString.stringify(filters)}`;
+    let url;
+    if (segment_name === 'all') {
+      url = `/${collection_name}/?${queryString.stringify(filters)}`;
+    }
+    else {
+      url = `/${collection_name}/${segment_name}/?${queryString.stringify(filters)}`;
+    }
     let { data } = await api.get(url);
     commit('update_data', [collection_name, data, rootState]);
   }

@@ -74,7 +74,7 @@ export const actions = {
       url = `/${collection_name}/?page=${page}`;
     }
     else {
-      url = `/${collection_name}/${segment_name}?page=${page}`;
+      url = `/${collection_name}/${segment_name}/?page=${page}`;
     }
     let { data } = await api.get(url);
     commit('update_list', [collection_name, data, key_name, segment_name, page]);

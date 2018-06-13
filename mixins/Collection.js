@@ -13,6 +13,7 @@ export default {
             await store.dispatch("filter/get_data", [
                 this.collection,
                 this.filters,
+                this.segment,
                 this.page
             ]);
         } else {

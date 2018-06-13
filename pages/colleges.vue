@@ -50,6 +50,7 @@ import Collection from "../mixins/Collection";
 
 export default {
   collection: "institutes",
+  segment: "colleges",
   mixins: [Collection],
   components: { Verified },
   computed: {
